@@ -897,6 +897,9 @@ video {
 .left-1\/2 {
   left: 50%;
 }
+.right-4 {
+  right: 1rem;
+}
 .top-0 {
   top: 0px;
 }
@@ -905,9 +908,6 @@ video {
 }
 .top-28 {
   top: 7rem;
-}
-.right-4 {
-  right: 1rem;
 }
 .top-4 {
   top: 1rem;
@@ -954,6 +954,9 @@ video {
 .mb-4 {
   margin-bottom: 1rem;
 }
+.mb-5 {
+  margin-bottom: 1.25rem;
+}
 .mb-6 {
   margin-bottom: 1.5rem;
 }
@@ -983,9 +986,6 @@ video {
 }
 .mt-8 {
   margin-top: 2rem;
-}
-.mb-5 {
-  margin-bottom: 1.25rem;
 }
 .block {
   display: block;
@@ -1106,9 +1106,6 @@ video {
 }
 .flex-shrink-0 {
   flex-shrink: 0;
-}
-.shrink {
-  flex-shrink: 1;
 }
 .flex-grow {
   flex-grow: 1;
@@ -1267,15 +1264,15 @@ video {
   --tw-border-opacity: 1;
   border-color: rgb(34 197 94 / var(--tw-border-opacity, 1));
 }
+.border-neutral-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(163 163 163 / var(--tw-border-opacity, 1));
+}
 .border-transparent {
   border-color: transparent;
 }
 .border-yellow-700\/50 {
   border-color: rgb(161 98 7 / 0.5);
-}
-.border-neutral-400 {
-  --tw-border-opacity: 1;
-  border-color: rgb(163 163 163 / var(--tw-border-opacity, 1));
 }
 .bg-\[\#173F25\] {
   --tw-bg-opacity: 1;
@@ -1297,16 +1294,16 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(240 253 244 / var(--tw-bg-opacity, 1));
 }
+.bg-neutral-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(245 245 245 / var(--tw-bg-opacity, 1));
+}
 .bg-transparent {
   background-color: transparent;
 }
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
-}
-.bg-neutral-100 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(245 245 245 / var(--tw-bg-opacity, 1));
 }
 .bg-opacity-10 {
   --tw-bg-opacity: 0.1;
@@ -1337,6 +1334,10 @@ video {
   padding-left: 2.5rem;
   padding-right: 2.5rem;
 }
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
 .px-3 {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
@@ -1348,6 +1349,10 @@ video {
 .px-6 {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+}
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
 }
 .py-12 {
   padding-top: 3rem;
@@ -1372,14 +1377,6 @@ video {
 .py-8 {
   padding-top: 2rem;
   padding-bottom: 2rem;
-}
-.px-2 {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-}
-.py-1 {
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
 }
 .pb-2 {
   padding-bottom: 0.5rem;
@@ -1530,14 +1527,6 @@ video {
   --tw-text-opacity: 1;
   color: rgb(31 41 55 / var(--tw-text-opacity, 1));
 }
-.text-red-600 {
-  --tw-text-opacity: 1;
-  color: rgb(220 38 38 / var(--tw-text-opacity, 1));
-}
-.text-white {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-}
 .text-neutral-600 {
   --tw-text-opacity: 1;
   color: rgb(82 82 82 / var(--tw-text-opacity, 1));
@@ -1545,6 +1534,14 @@ video {
 .text-neutral-800 {
   --tw-text-opacity: 1;
   color: rgb(38 38 38 / var(--tw-text-opacity, 1));
+}
+.text-red-600 {
+  --tw-text-opacity: 1;
+  color: rgb(220 38 38 / var(--tw-text-opacity, 1));
+}
+.text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 .placeholder-neutral-500::-moz-placeholder {
   --tw-placeholder-opacity: 1;
@@ -2650,6 +2647,78 @@ h1, h2, h3, h4, h5, h6 {
     color: #a1a1aa; /* Darker gray for disabled icon */
     cursor: not-allowed;
     box-shadow: none;
+}
+/* --- Bookshelf & 3D Book Styles (Final Version) --- */
+
+.bookshelf {
+    display: flex;
+    width: -moz-max-content;
+    width: max-content;
+    gap: 2rem;
+    /* THIS IS THE FIX: Adds a 1rem buffer above and below the books */
+    padding: 1rem 0;
+}
+
+.book-item {
+    perspective: 1500px;
+}
+
+.book-wrapper-3d {
+    width: 10rem;
+    height: 15rem;
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateY(0deg);
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    margin: 0 auto 1rem;
+}
+
+.book-item:hover .book-wrapper-3d {
+    transform: rotateY(35deg) scale(1.05);
+}
+
+.book-cover-3d {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-origin: left;
+    transform: translateZ(1.25rem);
+    border-radius: 0 5px 5px 0;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    overflow: hidden;
+    z-index: 10;
+}
+
+.book-cover-3d img {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+       object-fit: cover;
+}
+
+.book-spine-3d {
+    position: absolute;
+    width: 2.5rem;
+    height: 100%;
+    left: 0;
+    background-color: #333;
+    background-image: linear-gradient(to right, rgba(0,0,0,0.2) 0%, rgba(255,255,255,0.1) 10%, rgba(0,0,0,0.2) 100%);
+    transform-origin: center;
+    transform: rotateY(-90deg) translateZ(1.25rem);
+    color: white;
+    font-size: 0.75rem;
+    padding: 1.5rem 0.25rem;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.book-spine-3d p {
+    font-size: 0.65rem;
+    opacity: 0.8;
+    margin-top: 0.5rem;
 }
 
 .hover\:-translate-y-1:hover {

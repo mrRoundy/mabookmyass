@@ -36,7 +36,6 @@ export default function Bookshelf({ genre, description }: BookshelfProps) {
     const fetchAndSetupBooks = async () => {
       setLoading(true);
       
-      // THIS IS THE CHANGED PART: We now call the new database function
       const { data, error } = await supabase.rpc('get_random_books_by_genre', {
         genre_name: genre,
         book_limit: 10
@@ -47,7 +46,6 @@ export default function Bookshelf({ genre, description }: BookshelfProps) {
         setBooks([]);
       } else if (data && data.length > 0) {
         originalBookCount.current = data.length;
-        // Duplicate the array for the infinite scroll effect
         setBooks([...data, ...data]); 
       } else {
         setBooks([]);
@@ -135,6 +133,8 @@ export default function Bookshelf({ genre, description }: BookshelfProps) {
                        </div>
                        <div className="book-spine-3d">
                            <h4>{book.title}</h4>
+                           {/* Added author to the spine */}
+                           <p>{book.author || 'Unknown'}</p>
                        </div>
                     </div>
                     <div className="book-info">
