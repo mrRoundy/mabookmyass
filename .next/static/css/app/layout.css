@@ -906,6 +906,12 @@ video {
 .top-28 {
   top: 7rem;
 }
+.right-4 {
+  right: 1rem;
+}
+.top-4 {
+  top: 1rem;
+}
 .z-0 {
   z-index: 0;
 }
@@ -925,6 +931,10 @@ video {
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
+}
+.my-5 {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
 }
 .-mb-16 {
   margin-bottom: -4rem;
@@ -973,6 +983,9 @@ video {
 }
 .mt-8 {
   margin-top: 2rem;
+}
+.mb-5 {
+  margin-bottom: 1.25rem;
 }
 .block {
   display: block;
@@ -1187,6 +1200,9 @@ video {
 .overflow-hidden {
   overflow: hidden;
 }
+.overflow-y-auto {
+  overflow-y: auto;
+}
 .overflow-x-hidden {
   overflow-x: hidden;
 }
@@ -1257,6 +1273,10 @@ video {
 .border-yellow-700\/50 {
   border-color: rgb(161 98 7 / 0.5);
 }
+.border-neutral-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(163 163 163 / var(--tw-border-opacity, 1));
+}
 .bg-\[\#173F25\] {
   --tw-bg-opacity: 1;
   background-color: rgb(23 63 37 / var(--tw-bg-opacity, 1));
@@ -1283,6 +1303,13 @@ video {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+}
+.bg-neutral-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(245 245 245 / var(--tw-bg-opacity, 1));
+}
+.bg-opacity-10 {
+  --tw-bg-opacity: 0.1;
 }
 .object-contain {
   -o-object-fit: contain;
@@ -1346,6 +1373,14 @@ video {
   padding-top: 2rem;
   padding-bottom: 2rem;
 }
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
 .pb-2 {
   padding-bottom: 0.5rem;
 }
@@ -1354,6 +1389,9 @@ video {
 }
 .pl-4 {
   padding-left: 1rem;
+}
+.pr-20 {
+  padding-right: 5rem;
 }
 .text-left {
   text-align: left;
@@ -1500,6 +1538,14 @@ video {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
+.text-neutral-600 {
+  --tw-text-opacity: 1;
+  color: rgb(82 82 82 / var(--tw-text-opacity, 1));
+}
+.text-neutral-800 {
+  --tw-text-opacity: 1;
+  color: rgb(38 38 38 / var(--tw-text-opacity, 1));
+}
 .placeholder-neutral-500::-moz-placeholder {
   --tw-placeholder-opacity: 1;
   color: rgb(115 115 115 / var(--tw-placeholder-opacity, 1));
@@ -1566,6 +1612,11 @@ video {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
+.transition-transform {
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
 .duration-300 {
   transition-duration: 300ms;
 }
@@ -1629,7 +1680,7 @@ h1, h2, h3, h4, h5, h6 {
 /* This class is added by the component to start the blinking */
 .blinking::after {
   animation: blink 1s step-end infinite;
-}s
+}
 
 /* --- Homepage Hero Banner & Carousel --- */
 .hero-banner {
@@ -2601,6 +2652,11 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: none;
 }
 
+.hover\:-translate-y-1:hover {
+  --tw-translate-y: -0.25rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
 .hover\:scale-105:hover {
   --tw-scale-x: 1.05;
   --tw-scale-y: 1.05;
@@ -2633,6 +2689,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .hover\:opacity-90:hover {
   opacity: 0.9;
+}
+
+.hover\:shadow-xl:hover {
+  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .focus\:outline-none:focus {

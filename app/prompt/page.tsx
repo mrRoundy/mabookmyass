@@ -5,13 +5,134 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import TypingAnimationPrompt from '@/components/TypingAnimationPrompt';
 
-// Define the structure of a Recommendation object
+// --- TYPE DEFINITIONS ---
 interface Recommendation {
   id: string;
   title: string;
   author: string;
   highlight: string;
 }
+
+interface Highlight {
+  id: string;
+  text: string;
+  bookTitle: string;
+  bookAuthor: string;
+  bookId: string;
+}
+
+interface Book {
+  id: string;
+  title: string;
+  author: string;
+  highlights: string;
+  synopsis?: string;
+}
+
+// --- HELPER FUNCTIONS (Moved outside the component) ---
+
+const AVAILABLE_GENRES = [
+    "Habits", "Finance", "Leadership", "Mental health", "Motivational",
+    "Physical Health", "Time Management", "Communication", "Self-Discovery",
+    "Decision making", "Creativity", "Cognitive intelligence", "Behaviour",
+    "Emotional Intelligence", "Innovation", "Philosophy", "Entrepreneurship"
+];
+
+const generateAIPrompt = (taskType: string, userPrompt?: string | null, availableGenres?: string | null, data?: any, totalCount?: number): string => {
+    // This function remains the same as the previous version.
+    const prompts: { [key: string]: any } = {
+        languageDetection: {
+            role: "You are a highly accurate language identification AI.",
+            task: "Analyze the user's query and determine if it is primarily written in English or Indonesian.",
+            outputFormat: `
+- Your response MUST be a valid JSON object.
+- The JSON object must have a single key: "language".
+- The value must be either "en" for English or "id" for Indonesian.`,
+            content: `User query: "${userPrompt}"`
+        },
+        highlightTranslation: {
+            role: "You are an expert translator specializing in conveying the nuanced meaning of book highlights from English to Indonesian.",
+            task: "Translate EACH of the following English book highlights into Indonesian. Preserve the core wisdom, context, and tone of the original highlight. Return the translations in the exact same order as the input.",
+            outputFormat: `
+- Your response MUST be a valid JSON object.
+- The JSON object must have a single key: "translations".
+- The value must be an array of strings.`,
+            content: `Original English highlights (JSON array format):\n${JSON.stringify(data)}`
+        },
+        genreAnalysis: {
+            role: "You are a specialized AI assistant with expert knowledge of book genres and user intent analysis. You are fluent in both English and Indonesian.",
+            context: `Available genres: ${availableGenres}`,
+            task: `Analyze the user's query, which can be in English or Indonesian, and determine which book genres would be most relevant.`,
+            process: `
+1. Carefully read the query to understand the user's needs, interests, or preferences.
+2. Scan the available genres for the best matches.
+3. Select a minimum of 1 and a maximum of 3 genres that are most relevant.`,
+            outputFormat: `
+- Your response MUST be a valid JSON object.
+- The JSON object must have a single key: "genres".
+- The value of "genres" must be an array of strings.`,
+            content: `User query: "${userPrompt}"\n\nSelected genres:`
+        },
+        highlightRanking: {
+            role: "You are an expert content analyst specializing in matching book insights to user queries with surgical precision. You are fluent in both English and Indonesian.",
+            context: `You have ${totalCount} individual book highlights. Your task is to find the most relevant highlights that directly answer or address the user's specific query.`,
+            task: `Select the TOP 5 most relevant highlights that best answer the user's query.`,
+            process: `
+1. Analyze the user's query to identify their specific need or problem.
+2. Evaluate each highlight for direct relevance to the query's meaning.
+3. Select only the most relevant highlights. A maximum of 5 highlights is allowed.`,
+            outputFormat: `
+- Your response MUST be a valid JSON object.
+- The JSON object must have a single key: "recommendations".
+- The value must be an array of objects, each with an "id" field.
+- Order by relevance (best match first).`,
+            content: `Available highlights:\n${data}\n\nUser query: "${userPrompt}"\n\nBest matching highlights (ranked by relevance):`
+        },
+        synopsisRanking: {
+            role: "You are an expert content analyst specializing in matching book synopses to user queries with surgical precision. You are fluent in both English and Indonesian.",
+            context: `You have ${totalCount} individual book synopses. Your task is to find the most relevant synopses that directly address the user's specific query.`,
+            task: `Select the TOP 5 most relevant synopses that best answer the user's query.`,
+            process: `
+1. Analyze the user's query to identify their specific need or problem.
+2. Evaluate each synopsis for direct relevance to the query's meaning.
+3. Strongly prefer selecting synopses from different books.
+4. A maximum of 5 synopses is allowed.`,
+            outputFormat: `
+- Your response MUST be a valid JSON object.
+- The JSON object must have a single key: "recommendations".
+- The value must be an array of objects, each with an "id" field.
+- Order by relevance (best match first).`,
+            content: `Available synopses:\n${data}\n\nUser query: "${userPrompt}"\n\nBest matching synopses (ranked by relevance):`
+        }
+    };
+    const selectedPrompt = prompts[taskType];
+    if (!selectedPrompt) throw new Error(`Unknown task type: ${taskType}`);
+    let promptString = `# ROLE\n${selectedPrompt.role}`;
+    if (selectedPrompt.context) promptString += `\n\n# CONTEXT\n${selectedPrompt.context}`;
+    if (selectedPrompt.task) promptString += `\n\n# TASK\n${selectedPrompt.task}`;
+    if (selectedPrompt.process) promptString += `\n\n# PROCESS\n${selectedPrompt.process}`;
+    if (selectedPrompt.outputFormat) promptString += `\n\n# OUTPUT FORMAT\n${selectedPrompt.outputFormat}`;
+    if (selectedPrompt.content) promptString += `\n\n${selectedPrompt.content}`;
+    return promptString;
+};
+
+const parseHighlights = (highlightsText: string): string[] => {
+    if (!highlightsText || typeof highlightsText !== 'string') return [];
+    const regex = /(["“])(.*?)(["”])/g;
+    const matches: RegExpExecArray[] = [];
+    let match: RegExpExecArray | null;
+    while ((match = regex.exec(highlightsText)) !== null) {
+        matches.push(match);
+    }
+    return matches.length > 0 ? matches.map(match => match[2].trim()) : (highlightsText.trim() ? [highlightsText.trim()] : []);
+};
+
+const escapeHtml = (text: string): string => {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+};
+
 
 function PromptComponent() {
   const searchParams = useSearchParams();
@@ -20,23 +141,165 @@ function PromptComponent() {
   const [isLoading, setIsLoading] = useState(false);
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [error, setError] = useState<string | null>(null);
-
-  // Your handleSearch logic and other functions remain here...
+  
   const handleSearch = async (currentQuery = query, currentSearchType = searchType) => {
-    // Search logic is unchanged
+    if (!currentQuery.trim()) {
+      setError('Please enter a prompt to get recommendations.');
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+    setRecommendations([]);
+
+    try {
+      // Step 1: Analyze prompt for language and genres (no changes here)
+      const langPrompt = generateAIPrompt('languageDetection', currentQuery);
+      const langResult = await callApi('/api/analyze', { prompt: langPrompt });
+      const detectedLang = langResult.language || 'en';
+
+      const genrePrompt = generateAIPrompt('genreAnalysis', currentQuery, AVAILABLE_GENRES.join(', '));
+      const genreResult = await callApi('/api/analyze', { prompt: genrePrompt });
+      const genres = genreResult.genres;
+      if (!genres || genres.length === 0) {
+        throw new Error('Could not determine relevant genres for your query. Please try being more specific.');
+      }
+
+      // Step 2: Fetch books
+      const searchEndpoint = currentSearchType === 'synopsis' ? '/api/books/search-by-synopsis' : '/api/books/search';
+      const books: Book[] = await callApi(searchEndpoint, { genres });
+      if (!books || books.length === 0) {
+        throw new Error('No books found for the determined genres. Please try a different query.');
+      }
+      
+      // --- THIS IS THE FIX ---
+      // Limit the number of books to process to prevent the API prompt from being too large.
+      const booksToProcess = books.slice(0, 75);
+      // --- END OF FIX ---
+
+      let finalRecommendations: Recommendation[];
+
+      // Step 3: Rank and process based on search type
+      if (currentSearchType === 'synopsis') {
+        const synopsisData = booksToProcess.map((book, index) => `ID: synopsis_${index} | Book: "${book.title}" | Synopsis: "${book.synopsis}"`).join('\n');
+        const rankingPrompt = generateAIPrompt('synopsisRanking', currentQuery, null, synopsisData, booksToProcess.length);
+        const rankingResult = await callApi('/api/analyze', { prompt: rankingPrompt });
+        const selectedIds = (rankingResult.recommendations || []).map((rec: { id: string }) => rec.id);
+
+        finalRecommendations = buildRecommendationsFromSynopsis(selectedIds, booksToProcess);
+
+      } else { // Highlights search
+        const allHighlights = extractAllHighlights(booksToProcess);
+        if (allHighlights.length === 0) throw new Error('No valid highlights found in the fetched books.');
+
+        const highlightData = allHighlights.map(h => `ID: ${h.id} | Book: "${h.bookTitle}" | Highlight: "${h.text}"`).join('\n');
+        const rankingPrompt = generateAIPrompt('highlightRanking', currentQuery, null, highlightData, allHighlights.length);
+        const rankingResult = await callApi('/api/analyze', { prompt: rankingPrompt });
+        const selectedIds = (rankingResult.recommendations || []).map((rec: { id: string }) => rec.id);
+        
+        finalRecommendations = buildRecommendationsFromHighlights(selectedIds, allHighlights);
+      }
+
+      if (finalRecommendations.length === 0) {
+        throw new Error('AI could not find a strong match for your query. Please try rephrasing or being more specific.');
+      }
+      
+      // Step 4: Translate if necessary (no changes here)
+      if (detectedLang === 'id' && finalRecommendations.length > 0) {
+          const highlightsToTranslate = finalRecommendations.map(rec => rec.highlight);
+          const translationPrompt = generateAIPrompt('highlightTranslation', null, null, highlightsToTranslate);
+          const translationResult = await callApi('/api/analyze', { prompt: translationPrompt });
+
+          if (translationResult.translations && translationResult.translations.length === finalRecommendations.length) {
+              finalRecommendations = finalRecommendations.map((rec, index) => ({
+                  ...rec,
+                  highlight: translationResult.translations[index] || rec.highlight,
+              }));
+          }
+      }
+
+      setRecommendations(finalRecommendations);
+
+    } catch (err: any) {
+      setError(err.message || 'An unexpected error occurred.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const callApi = async (endpoint: string, body: object) => {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || `Request failed with status ${response.status}`);
+    }
+    return response.json();
+  };
+
+  const extractAllHighlights = (books: Book[]): Highlight[] => {
+      const allHighlights: Highlight[] = [];
+      books.forEach((book, bookIndex) => {
+          const highlights = parseHighlights(book.highlights);
+          highlights.forEach((highlight, highlightIndex) => {
+              allHighlights.push({
+                  id: `highlight_${bookIndex}_${highlightIndex}`,
+                  text: highlight,
+                  bookTitle: book.title,
+                  bookAuthor: book.author,
+                  bookId: book.id,
+              });
+          });
+      });
+      return allHighlights;
   };
   
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    handleSearch();
+  const buildRecommendationsFromHighlights = (selectedIds: string[], allHighlights: Highlight[]): Recommendation[] => {
+      const recommendations: Recommendation[] = [];
+      const addedBookIds = new Set<string>();
+      for (const id of selectedIds) {
+          const highlight = allHighlights.find(h => h.id === id);
+          if (highlight && !addedBookIds.has(highlight.bookId)) {
+              recommendations.push({
+                  id: highlight.bookId,
+                  title: highlight.bookTitle,
+                  author: highlight.bookAuthor,
+                  highlight: highlight.text,
+              });
+              addedBookIds.add(highlight.bookId);
+          }
+      }
+      return recommendations;
+  };
+  
+  const buildRecommendationsFromSynopsis = (selectedIds: string[], books: Book[]): Recommendation[] => {
+    const recommendations: Recommendation[] = [];
+    const addedBookTitles = new Set<string>();
+    for (const id of selectedIds) {
+        if (recommendations.length >= 5) break;
+        const index = parseInt(id.split('_')[1]);
+        const book = books[index];
+        if (book && book.synopsis && !addedBookTitles.has(book.title)) {
+            recommendations.push({
+                id: book.id,
+                title: book.title,
+                author: book.author,
+                highlight: book.synopsis,
+            });
+            addedBookTitles.add(book.title);
+        }
+    }
+    return recommendations;
   };
 
-  // THIS IS THE NEW FUNCTION
+  const handleSubmit = (e: FormEvent) => { e.preventDefault(); handleSearch(query, searchType); };
+  
   const handleTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setQuery(e.target.value);
-    // Reset the height to allow it to shrink
     e.target.style.height = 'auto';
-    // Set the height to the scroll height to make it expand
     e.target.style.height = `${e.target.scrollHeight}px`;
   };
 
@@ -44,8 +307,10 @@ function PromptComponent() {
     const queryFromUrl = searchParams.get('query');
     const searchTypeFromUrl = searchParams.get('searchType');
     if (queryFromUrl) {
+      const newSearchType = searchTypeFromUrl === 'synopsis' ? 'synopsis' : 'highlights';
       setQuery(queryFromUrl);
-      if (searchTypeFromUrl) setSearchType(searchTypeFromUrl);
+      setSearchType(newSearchType);
+      handleSearch(queryFromUrl, newSearchType);
     }
   }, [searchParams]);
 
@@ -53,18 +318,18 @@ function PromptComponent() {
     <main className="flex-grow flex flex-col items-center justify-center min-h-[calc(100vh-80px)] bg-classic-cream px-4 sm:px-6 lg:px-8 py-12">
       <div className="w-full max-w-4xl mx-auto">
         <div className="text-center text-classic-green mb-10 max-w-2xl mx-auto">
-    <TypingAnimationPrompt />
-    <h2 className="font-serif text-5xl md:text-6xl font-bold uppercase tracking-wide">
-        Begin by Asking...
-    </h2>
-</div>
+          <TypingAnimationPrompt />
+          <h2 className="font-serif text-5xl md:text-6xl font-bold uppercase tracking-wide">
+              Begin by Asking...
+          </h2>
+        </div>
         
         <form onSubmit={handleSubmit} className="mb-8">
             <div className="search-box-container">
                 <textarea
-                    className="search-input w-full flex-grow bg-transparent text-classic-green placeholder-neutral-500 text-base leading-relaxed focus:outline-none resize-none overflow-y-hidden"
+                    className="search-input w-full flex-grow bg-transparent text-classic-green placeholder-neutral-500 text-base leading-relaxed focus:outline-none resize-none overflow-y-auto"
                     value={query}
-                    onChange={handleTextareaChange} // Use the new handler here
+                    onChange={handleTextareaChange}
                     placeholder="Ask me anything about books you'd like to read..."
                     rows={1}
                 />
@@ -80,13 +345,50 @@ function PromptComponent() {
             </div>
         </form>
 
-        {/* Loading, Error, and Results sections are unchanged... */}
+        {isLoading && (
+          <div className="text-center text-classic-green text-lg my-5">
+              <div className="book-container">
+                  <div className="book">
+                      <div className="book__page"></div>
+                      <div className="book__page"></div>
+                      <div className="book__page"></div>
+                  </div>
+              </div>
+              <p>AI is analyzing your request and finding the best book recommendations...</p>
+          </div>
+        )}
+
+        {error && (
+          <div className="bg-classic-green bg-opacity-10 border border-classic-green text-classic-green p-4 rounded-lg my-5 text-center">
+            {error}
+          </div>
+        )}
+
+        {!isLoading && recommendations.length > 0 && (
+          <div className="results-container">
+            {recommendations.map((rec, index) => (
+              <div key={rec.id + '-' + index} className="bg-white rounded-2xl p-6 mb-5 shadow-lg border-l-4 border-classic-green transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl relative">
+                <div className="absolute top-4 right-4 bg-classic-green text-white text-xs px-2 py-1 rounded-full font-semibold">
+                    #{index + 1} Best Match
+                </div>
+                <div className="text-base leading-relaxed text-neutral-800 bg-neutral-100 p-4 rounded-lg border-l-4 border-neutral-400 italic mb-4 pr-20">
+                  "{escapeHtml(rec.highlight)}"
+                </div>
+                
+                <Link href={`/book-details/${rec.id}`} className="text-xl font-bold text-classic-green mb-2 hover:underline">
+                  {escapeHtml(rec.title)}
+                </Link>
+
+                <div className="text-base text-neutral-600 italic">by {escapeHtml(rec.author)}</div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </main>
   );
 }
 
-// Suspense wrapper remains unchanged
 export default function PromptPage() {
     return (
         <Suspense fallback={<div className="text-center p-12">Loading page...</div>}>

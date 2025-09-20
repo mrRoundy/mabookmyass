@@ -52,7 +52,7 @@ h1, h2, h3, h4, h5, h6 {
 /* This class is added by the component to start the blinking */
 .blinking::after {
   animation: blink 1s step-end infinite;
-}s
+}
 
 /* --- Homepage Hero Banner & Carousel --- */
 .hero-banner {
