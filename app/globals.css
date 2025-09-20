@@ -33,12 +33,7 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
-/* --- Keyframes for the animation effects --- */
-@keyframes typing {
-  from { width: 0; }
-  to { width: 100%; }
-}
-
+/* --- Base Styles for Both Animations --- */
 @keyframes blink {
   50% { border-color: transparent; }
   100% { border-color: transparent; }
@@ -49,49 +44,45 @@ h1, h2, h3, h4, h5, h6 {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- Main animation class for desktop --- */
-.typing-animation {
-  display: inline-block;
-  overflow: hidden;
-  white-space: nowrap;
-  border-right: 4px solid #173F25;
-  /* This combines the typing and blinking animations */
-  /* Increased steps from 59 to 65 for a buffer */
-  animation:
-    typing 3.5s steps(65, end) forwards,
-    blink .75s step-end 5 forwards;
-}
-        
-/* --- Responsive styles for mobile screens --- */
-@media (max-width: 768px) {
-  .typing-animation {
-    white-space: normal;
-    border-right: none;
-    width: 100%;
-    /* On mobile, we use a simple fade-in instead of typing */
-    animation: fadeIn 1.5s ease-out forwards;
-  }
+/* --- Animation for MAIN Page --- */
+@keyframes typing-main {
+  from { width: 0; }
+  to { width: 59%; }
 }
 
-/* --- Main animation class for desktop --- */
-.typing-animation {
+.typing-animation-main {
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
   border-right: 4px solid #173F25;
-  /* This combines the typing and blinking animations */
   animation:
-    typing 3.5s steps(59, end) forwards,
-    blink .75s step-end 5 forwards;
+    typing-main 3s steps(60, end) forwards,
+    blink .75s step-end infinite;
+}
+
+/* --- Animation for PROMPT Page --- */
+@keyframes typing-prompt {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+.typing-animation-prompt {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 4px solid #173F25;
+  animation:
+    typing-prompt 3s steps(60, end) forwards,
+    blink .75s step-end infinite;
 }
         
-/* --- Responsive styles for mobile screens --- */
+/* --- Responsive Fade-in for Both --- */
 @media (max-width: 768px) {
-  .typing-animation {
+  .typing-animation-main,
+  .typing-animation-prompt {
     white-space: normal;
     border-right: none;
     width: 100%;
-    /* On mobile, we use a simple fade-in instead of typing */
     animation: fadeIn 1.5s ease-out forwards;
   }
 }
@@ -596,23 +587,101 @@ h1, h2, h3, h4, h5, h6 {
 
 .bookshelf-title {
     font-family: var(--font-playfair-display), serif;
-    font-size: 2.5rem; /* text-4xl */
+    font-size: 2.5rem;
     font-weight: 900;
-    color: #173F25; /* classic-green */
+    color: #173F25;
     margin-bottom: 0.5rem;
 }
 
 .bookshelf-subtitle {
-    font-size: 1.125rem; /* text-lg */
-    color: #6B7280; /* gray-500 */
+    font-size: 1.125rem;
+    color: #6B7280;
     max-width: 600px;
     margin: 0 auto;
 }
 
 @media (min-width: 768px) {
     .bookshelf-title {
-        font-size: 3rem; /* md:text-5xl */
+        font-size: 3rem;
     }
+}
+
+/* --- Bookshelf Page Filter Styles --- */
+.genre-toggle-container {
+    margin-bottom: 1.5rem;
+}
+
+.genre-toggle-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background-color: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    color: #173F25; /* Icon color */
+}
+
+.genre-toggle-button:hover {
+    border-color: #173F25;
+}
+
+.genre-toggle-button.active {
+    background-color: #173F25;
+    color: #ffffff; /* Icon color when active */
+    border-color: #173F25;
+}
+
+.toggle-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* --- Genre Tag Cloud with Dropdown Animation --- */
+.genre-tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transform: translateY(-10px);
+    transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out, transform 0.3s ease-in-out, margin-bottom 0.4s ease-in-out;
+}
+
+.genre-tags-container.visible {
+    max-height: 500px;
+    opacity: 1;
+    transform: translateY(0);
+    margin-bottom: 3rem;
+}
+
+.genre-tag {
+    padding: 8px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 9999px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #173F25;
+    background-color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+}
+
+.genre-tag:hover {
+    border-color: #173F25;
+    background-color: rgba(23, 63, 37, 0.05);
+}
+
+.genre-tag.active {
+    background-color: #173F25;
+    color: #ffffff;
+    border-color: #173F25;
 }
 
 /* --- Policy Page Layout (for Privacy & Terms) --- */
@@ -843,4 +912,140 @@ h1, h2, h3, h4, h5, h6 {
     .book-author {
         font-size: 1.25rem;
     }
+}
+
+/* --- Prompt Page UI Styles --- */
+.responsive-quote-text {
+    /* Clamps font size between a min, a desired value, and a max */
+    font-size: clamp(1rem, 2.5vw, 1.6rem);
+}
+
+.responsive-header-text {
+    font-size: clamp(1.875rem, 5vw, 3rem);
+}
+
+.search-input::-webkit-scrollbar {
+    width: 4px;
+}
+.search-input::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+.search-input::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 2px;
+}
+
+/* --- Prompt Page Specific Styles (Matching Original Design) --- */
+
+/* Ensures the prompt page takes full available height and centers content */
+.flex-grow.flex.flex-col.items-center.justify-center.min-h-\[calc\(100vh-80px\)\] {
+    background-color: #FDF9F6; /* Ensure the background is the exact light cream */
+    padding-top: 5rem; /* More top padding to align content */
+    padding-bottom: 5rem; /* More bottom padding */
+    min-height: calc(100vh - 80px); /* Adjust based on navbar height, if necessary */
+}
+
+/* Quote Text Styling */
+.prompt-page .responsive-quote-text {
+    font-size: 1.25rem; /* 20px */
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    color: #173F25;
+}
+
+/* Header Text Styling */
+.prompt-page .responsive-header-text {
+    font-family: var(--font-playfair-display);
+    font-size: 3rem; /* 48px */
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #173F25;
+}
+
+/* Search Box Container */
+.search-box-container {
+    background-color: #ffffff;
+    border: 1px solid #c7d2d3; /* Lighter border for a softer look */
+    border-radius: 1rem; /* 16px - More rounded corners */
+    padding: 1rem 1.5rem; /* Adjusted padding */
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Softer shadow */
+    transition: all 0.2s ease-in-out;
+}
+
+.search-box-container:focus-within {
+    border-color: #173F25; /* Darker green border on focus */
+    box-shadow: 0 4px 20px rgba(23, 63, 37, 0.15); /* More prominent shadow on focus */
+}
+
+/* Search Input (Textarea) */
+.search-input {
+    min-height: 24px; /* Ensure a minimum height for one line */
+    padding-bottom: 1rem; /* Padding below text for button row */
+    font-family: var(--font-inter);
+    font-weight: 400;
+    color: #173F25;
+    /* Placeholder color adjustment */
+    &::placeholder {
+        color: #6b7280; /* Neutral-500 */
+        opacity: 1; /* Firefox default opacity */
+    }
+}
+
+/* Search Options Row (buttons and send button) */
+.search-options-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.5rem; /* Space between textarea and buttons */
+    border-top: 1px solid #e5e7eb; /* Subtle separator line */
+}
+
+/* Search Option Buttons (By Highlights, By Synopsis) */
+.search-option-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 9999px; /* Full pill shape */
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    border: 1px solid transparent; /* Default transparent border */
+    color: #173F25; /* Text color for inactive state */
+    background-color: #f3f4f6; /* Light gray background for inactive */
+}
+
+.search-option-btn:hover:not(.active) {
+    background-color: #e5e7eb; /* Slightly darker gray on hover */
+}
+
+.search-option-btn.active {
+    background-color: #173F25; /* Classic green for active state */
+    color: #ffffff; /* White text for active state */
+    border-color: #173F25; /* Green border for active state */
+}
+
+/* Send Button */
+.send-btn {
+    background-color: #173F25; /* Green background */
+    color: #ffffff; /* White icon */
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(23, 63, 37, 0.2); /* Soft shadow */
+    /* ADDED background-color to the transition */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+
+.send-btn:hover:enabled {
+    transform: translateY(-2px); /* Slight lift on hover */
+    box-shadow: 0 4px 15px rgba(23, 63, 37, 0.3); /* Enhanced shadow on hover */
+    opacity: 0.9; /* ADDED: This makes the button slightly fade on hover */
+}
+
+.send-btn:disabled {
+    background-color: #e5e7eb; /* Lighter gray for disabled */
+    color: #a1a1aa; /* Darker gray for disabled icon */
+    cursor: not-allowed;
+    box-shadow: none;
 }

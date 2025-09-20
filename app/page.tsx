@@ -5,7 +5,7 @@ import Link from 'next/link';
 import BookCarousel from '@/components/BookCarousel';
 import HomePrompt from '@/components/HomePrompt';
 import Bookshelf from '@/components/Bookshelf';
-import TypingAnimation from '@/components/TypingAnimation';
+import TypingAnimationMain from '@/components/TypingAnimationMain';
 
 export default function HomePage() {
   return (
@@ -28,7 +28,7 @@ export default function HomePage() {
       <main>
         <section className="search-section">
             <div className="text-center text-classic-green mb-10">
-    <TypingAnimation />
+    <TypingAnimationMain />
     <h2 className="font-serif text-[42.6px] font-bold uppercase tracking-widest">
         Begin by Asking...
     </h2>

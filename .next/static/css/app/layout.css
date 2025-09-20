@@ -897,12 +897,6 @@ video {
 .left-1\/2 {
   left: 50%;
 }
-.right-0 {
-  right: 0px;
-}
-.right-4 {
-  right: 1rem;
-}
 .top-0 {
   top: 0px;
 }
@@ -912,8 +906,8 @@ video {
 .top-28 {
   top: 7rem;
 }
-.top-4 {
-  top: 1rem;
+.z-0 {
+  z-index: 0;
 }
 .z-10 {
   z-index: 10;
@@ -932,10 +926,6 @@ video {
   margin-left: auto;
   margin-right: auto;
 }
-.my-5 {
-  margin-top: 1.25rem;
-  margin-bottom: 1.25rem;
-}
 .-mb-16 {
   margin-bottom: -4rem;
 }
@@ -953,9 +943,6 @@ video {
 }
 .mb-4 {
   margin-bottom: 1rem;
-}
-.mb-5 {
-  margin-bottom: 1.25rem;
 }
 .mb-6 {
   margin-bottom: 1.5rem;
@@ -1008,17 +995,11 @@ video {
 .h-10 {
   height: 2.5rem;
 }
-.h-11 {
-  height: 2.75rem;
-}
 .h-16 {
   height: 4rem;
 }
 .h-20 {
   height: 5rem;
-}
-.h-24 {
-  height: 6rem;
 }
 .h-5 {
   height: 1.25rem;
@@ -1041,14 +1022,8 @@ video {
 .h-full {
   height: 100%;
 }
-.max-h-0 {
-  max-height: 0px;
-}
 .max-h-24 {
   max-height: 6rem;
-}
-.max-h-96 {
-  max-height: 24rem;
 }
 .max-h-\[280px\] {
   max-height: 280px;
@@ -1062,20 +1037,11 @@ video {
 .min-h-screen {
   min-height: 100vh;
 }
-.w-1\/2 {
-  width: 50%;
-}
 .w-10 {
   width: 2.5rem;
 }
-.w-11 {
-  width: 2.75rem;
-}
 .w-16 {
   width: 4rem;
-}
-.w-36 {
-  width: 9rem;
 }
 .w-5 {
   width: 1.25rem;
@@ -1122,6 +1088,9 @@ video {
 .flex-shrink-0 {
   flex-shrink: 0;
 }
+.shrink {
+  flex-shrink: 1;
+}
 .flex-grow {
   flex-grow: 1;
 }
@@ -1135,58 +1104,6 @@ video {
 }
 .transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-@keyframes flip-1 {
-
-  0%, 15% {
-    transform: rotateY(0deg);
-  }
-
-  40%, 100% {
-    transform: rotateY(-180deg);
-  }
-}
-.animate-flip-1 {
-  animation: flip-1 3s ease-in-out infinite;
-}
-@keyframes flip-2 {
-
-  0%, 20% {
-    transform: rotateY(0deg);
-  }
-
-  45%, 100% {
-    transform: rotateY(-180deg);
-  }
-}
-.animate-flip-2 {
-  animation: flip-2 3s ease-in-out infinite;
-}
-@keyframes flip-3 {
-
-  0%, 25% {
-    transform: rotateY(0deg);
-  }
-
-  50%, 100% {
-    transform: rotateY(-180deg);
-  }
-}
-.animate-flip-3 {
-  animation: flip-3 3s ease-in-out infinite;
-}
-@keyframes open-book {
-
-  0%, 100% {
-    transform: rotateY(0deg) rotateX(10deg);
-  }
-
-  20%, 80% {
-    transform: rotateY(20deg) rotateX(10deg);
-  }
-}
-.animate-open-book {
-  animation: open-book 3s ease-in-out infinite;
 }
 .cursor-pointer {
   cursor: pointer;
@@ -1210,9 +1127,6 @@ video {
 }
 .flex-col {
   flex-direction: column;
-}
-.flex-wrap {
-  flex-wrap: wrap;
 }
 .items-start {
   align-items: flex-start;
@@ -1240,9 +1154,6 @@ video {
 }
 .gap-16 {
   gap: 4rem;
-}
-.gap-3 {
-  gap: 0.75rem;
 }
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
@@ -1303,9 +1214,6 @@ video {
 .border-b {
   border-bottom-width: 1px;
 }
-.border-l-0 {
-  border-left-width: 0px;
-}
 .border-l-4 {
   border-left-width: 4px;
 }
@@ -1337,14 +1245,6 @@ video {
   --tw-border-opacity: 1;
   border-color: rgb(34 197 94 / var(--tw-border-opacity, 1));
 }
-.border-neutral-400 {
-  --tw-border-opacity: 1;
-  border-color: rgb(163 163 163 / var(--tw-border-opacity, 1));
-}
-.border-red-400 {
-  --tw-border-opacity: 1;
-  border-color: rgb(248 113 113 / var(--tw-border-opacity, 1));
-}
 .border-transparent {
   border-color: transparent;
 }
@@ -1370,14 +1270,6 @@ video {
 .bg-green-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(240 253 244 / var(--tw-bg-opacity, 1));
-}
-.bg-neutral-100 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(245 245 245 / var(--tw-bg-opacity, 1));
-}
-.bg-red-100 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(254 226 226 / var(--tw-bg-opacity, 1));
 }
 .bg-transparent {
   background-color: transparent;
@@ -1412,10 +1304,6 @@ video {
   padding-left: 2.5rem;
   padding-right: 2.5rem;
 }
-.px-2 {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-}
 .px-3 {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
@@ -1428,14 +1316,6 @@ video {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
 }
-.py-1 {
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
-}
-.py-1\.5 {
-  padding-top: 0.375rem;
-  padding-bottom: 0.375rem;
-}
 .py-12 {
   padding-top: 3rem;
   padding-bottom: 3rem;
@@ -1447,10 +1327,6 @@ video {
 .py-20 {
   padding-top: 5rem;
   padding-bottom: 5rem;
-}
-.py-3 {
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
 }
 .py-4 {
   padding-top: 1rem;
@@ -1472,9 +1348,6 @@ video {
 }
 .pl-4 {
   padding-left: 1rem;
-}
-.pr-20 {
-  padding-right: 5rem;
 }
 .text-left {
   text-align: left;
@@ -1503,6 +1376,9 @@ video {
 .text-5xl {
   font-size: 3rem;
   line-height: 1;
+}
+.text-\[20px\] {
+  font-size: 20px;
 }
 .text-\[28px\] {
   font-size: 28px;
@@ -1539,9 +1415,6 @@ video {
 .font-light {
   font-weight: 300;
 }
-.font-medium {
-  font-weight: 500;
-}
 .font-normal {
   font-weight: 400;
 }
@@ -1559,6 +1432,9 @@ video {
 }
 .leading-tight {
   line-height: 1.25;
+}
+.tracking-wide {
+  letter-spacing: 0.025em;
 }
 .tracking-wider {
   letter-spacing: 0.05em;
@@ -1610,17 +1486,9 @@ video {
   --tw-text-opacity: 1;
   color: rgb(31 41 55 / var(--tw-text-opacity, 1));
 }
-.text-neutral-600 {
+.text-red-600 {
   --tw-text-opacity: 1;
-  color: rgb(82 82 82 / var(--tw-text-opacity, 1));
-}
-.text-neutral-800 {
-  --tw-text-opacity: 1;
-  color: rgb(38 38 38 / var(--tw-text-opacity, 1));
-}
-.text-red-700 {
-  --tw-text-opacity: 1;
-  color: rgb(185 28 28 / var(--tw-text-opacity, 1));
+  color: rgb(220 38 38 / var(--tw-text-opacity, 1));
 }
 .text-white {
   --tw-text-opacity: 1;
@@ -1692,11 +1560,6 @@ video {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
-.transition-transform {
-  transition-property: transform;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
 .duration-300 {
   transition-duration: 300ms;
 }
@@ -1741,12 +1604,7 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
-/* --- Keyframes for the animation effects --- */
-@keyframes typing {
-  from { width: 0; }
-  to { width: 100%; }
-}
-
+/* --- Base Styles for Both Animations --- */
 @keyframes blink {
   50% { border-color: transparent; }
   100% { border-color: transparent; }
@@ -1757,49 +1615,45 @@ h1, h2, h3, h4, h5, h6 {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- Main animation class for desktop --- */
-.typing-animation {
-  display: inline-block;
-  overflow: hidden;
-  white-space: nowrap;
-  border-right: 4px solid #173F25;
-  /* This combines the typing and blinking animations */
-  /* Increased steps from 59 to 65 for a buffer */
-  animation:
-    typing 3.5s steps(65, end) forwards,
-    blink .75s step-end 5 forwards;
-}
-        
-/* --- Responsive styles for mobile screens --- */
-@media (max-width: 768px) {
-  .typing-animation {
-    white-space: normal;
-    border-right: none;
-    width: 100%;
-    /* On mobile, we use a simple fade-in instead of typing */
-    animation: fadeIn 1.5s ease-out forwards;
-  }
+/* --- Animation for MAIN Page --- */
+@keyframes typing-main {
+  from { width: 0; }
+  to { width: 59%; }
 }
 
-/* --- Main animation class for desktop --- */
-.typing-animation {
+.typing-animation-main {
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
   border-right: 4px solid #173F25;
-  /* This combines the typing and blinking animations */
   animation:
-    typing 3.5s steps(59, end) forwards,
-    blink .75s step-end 5 forwards;
+    typing-main 3s steps(60, end) forwards,
+    blink .75s step-end infinite;
+}
+
+/* --- Animation for PROMPT Page --- */
+@keyframes typing-prompt {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+.typing-animation-prompt {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 4px solid #173F25;
+  animation:
+    typing-prompt 3s steps(60, end) forwards,
+    blink .75s step-end infinite;
 }
         
-/* --- Responsive styles for mobile screens --- */
+/* --- Responsive Fade-in for Both --- */
 @media (max-width: 768px) {
-  .typing-animation {
+  .typing-animation-main,
+  .typing-animation-prompt {
     white-space: normal;
     border-right: none;
     width: 100%;
-    /* On mobile, we use a simple fade-in instead of typing */
     animation: fadeIn 1.5s ease-out forwards;
   }
 }
@@ -2307,23 +2161,101 @@ h1, h2, h3, h4, h5, h6 {
 
 .bookshelf-title {
     font-family: var(--font-playfair-display), serif;
-    font-size: 2.5rem; /* text-4xl */
+    font-size: 2.5rem;
     font-weight: 900;
-    color: #173F25; /* classic-green */
+    color: #173F25;
     margin-bottom: 0.5rem;
 }
 
 .bookshelf-subtitle {
-    font-size: 1.125rem; /* text-lg */
-    color: #6B7280; /* gray-500 */
+    font-size: 1.125rem;
+    color: #6B7280;
     max-width: 600px;
     margin: 0 auto;
 }
 
 @media (min-width: 768px) {
     .bookshelf-title {
-        font-size: 3rem; /* md:text-5xl */
+        font-size: 3rem;
     }
+}
+
+/* --- Bookshelf Page Filter Styles --- */
+.genre-toggle-container {
+    margin-bottom: 1.5rem;
+}
+
+.genre-toggle-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background-color: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    color: #173F25; /* Icon color */
+}
+
+.genre-toggle-button:hover {
+    border-color: #173F25;
+}
+
+.genre-toggle-button.active {
+    background-color: #173F25;
+    color: #ffffff; /* Icon color when active */
+    border-color: #173F25;
+}
+
+.toggle-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* --- Genre Tag Cloud with Dropdown Animation --- */
+.genre-tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transform: translateY(-10px);
+    transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out, transform 0.3s ease-in-out, margin-bottom 0.4s ease-in-out;
+}
+
+.genre-tags-container.visible {
+    max-height: 500px;
+    opacity: 1;
+    transform: translateY(0);
+    margin-bottom: 3rem;
+}
+
+.genre-tag {
+    padding: 8px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 9999px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #173F25;
+    background-color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+}
+
+.genre-tag:hover {
+    border-color: #173F25;
+    background-color: rgba(23, 63, 37, 0.05);
+}
+
+.genre-tag.active {
+    background-color: #173F25;
+    color: #ffffff;
+    border-color: #173F25;
 }
 
 /* --- Policy Page Layout (for Privacy & Terms) --- */
@@ -2555,94 +2487,223 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 1.25rem;
     }
 }
-.hover\:-translate-y-1:hover {
-  --tw-translate-y: -0.25rem;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+
+/* --- Prompt Page UI Styles --- */
+.responsive-quote-text {
+    /* Clamps font size between a min, a desired value, and a max */
+    font-size: clamp(1rem, 2.5vw, 1.6rem);
 }
+
+.responsive-header-text {
+    font-size: clamp(1.875rem, 5vw, 3rem);
+}
+
+.search-input::-webkit-scrollbar {
+    width: 4px;
+}
+.search-input::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+.search-input::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 2px;
+}
+
+/* --- Prompt Page Specific Styles (Matching Original Design) --- */
+
+/* Ensures the prompt page takes full available height and centers content */
+.flex-grow.flex.flex-col.items-center.justify-center.min-h-\[calc\(100vh-80px\)\] {
+    background-color: #FDF9F6; /* Ensure the background is the exact light cream */
+    padding-top: 5rem; /* More top padding to align content */
+    padding-bottom: 5rem; /* More bottom padding */
+    min-height: calc(100vh - 80px); /* Adjust based on navbar height, if necessary */
+}
+
+/* Quote Text Styling */
+.prompt-page .responsive-quote-text {
+    font-size: 1.25rem; /* 20px */
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    color: #173F25;
+}
+
+/* Header Text Styling */
+.prompt-page .responsive-header-text {
+    font-family: var(--font-playfair-display);
+    font-size: 3rem; /* 48px */
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #173F25;
+}
+
+/* Search Box Container */
+.search-box-container {
+    background-color: #ffffff;
+    border: 1px solid #c7d2d3; /* Lighter border for a softer look */
+    border-radius: 1rem; /* 16px - More rounded corners */
+    padding: 1rem 1.5rem; /* Adjusted padding */
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Softer shadow */
+    transition: all 0.2s ease-in-out;
+}
+
+.search-box-container:focus-within {
+    border-color: #173F25; /* Darker green border on focus */
+    box-shadow: 0 4px 20px rgba(23, 63, 37, 0.15); /* More prominent shadow on focus */
+}
+
+/* Search Input (Textarea) */
+.search-input {
+    min-height: 24px; /* Ensure a minimum height for one line */
+    padding-bottom: 1rem; /* Padding below text for button row */
+    font-family: var(--font-inter);
+    font-weight: 400;
+    color: #173F25;
+    /* Placeholder color adjustment */
+    &::-moz-placeholder {
+        color: #6b7280; /* Neutral-500 */
+        opacity: 1; /* Firefox default opacity */
+    }
+    &::placeholder {
+        color: #6b7280; /* Neutral-500 */
+        opacity: 1; /* Firefox default opacity */
+    }
+}
+
+/* Search Options Row (buttons and send button) */
+.search-options-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.5rem; /* Space between textarea and buttons */
+    border-top: 1px solid #e5e7eb; /* Subtle separator line */
+}
+
+/* Search Option Buttons (By Highlights, By Synopsis) */
+.search-option-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 9999px; /* Full pill shape */
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    border: 1px solid transparent; /* Default transparent border */
+    color: #173F25; /* Text color for inactive state */
+    background-color: #f3f4f6; /* Light gray background for inactive */
+}
+
+.search-option-btn:hover:not(.active) {
+    background-color: #e5e7eb; /* Slightly darker gray on hover */
+}
+
+.search-option-btn.active {
+    background-color: #173F25; /* Classic green for active state */
+    color: #ffffff; /* White text for active state */
+    border-color: #173F25; /* Green border for active state */
+}
+
+/* Send Button */
+.send-btn {
+    background-color: #173F25; /* Green background */
+    color: #ffffff; /* White icon */
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(23, 63, 37, 0.2); /* Soft shadow */
+    /* ADDED background-color to the transition */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+
+.send-btn:hover:enabled {
+    transform: translateY(-2px); /* Slight lift on hover */
+    box-shadow: 0 4px 15px rgba(23, 63, 37, 0.3); /* Enhanced shadow on hover */
+    opacity: 0.9; /* ADDED: This makes the button slightly fade on hover */
+}
+
+.send-btn:disabled {
+    background-color: #e5e7eb; /* Lighter gray for disabled */
+    color: #a1a1aa; /* Darker gray for disabled icon */
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
 .hover\:scale-105:hover {
   --tw-scale-x: 1.05;
   --tw-scale-y: 1.05;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
+
 .hover\:bg-\[\#FDF9F6\]:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(253 249 246 / var(--tw-bg-opacity, 1));
 }
+
 .hover\:bg-gray-100:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
 }
+
 .hover\:text-gray-300:hover {
   --tw-text-opacity: 1;
   color: rgb(209 213 219 / var(--tw-text-opacity, 1));
 }
+
 .hover\:text-white:hover {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
+
 .hover\:underline:hover {
   text-decoration-line: underline;
 }
+
 .hover\:opacity-90:hover {
   opacity: 0.9;
 }
-.hover\:shadow-xl:hover {
-  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
+
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
+
 .enabled\:bg-classic-green:enabled {
   --tw-bg-opacity: 1;
   background-color: rgb(23 63 37 / var(--tw-bg-opacity, 1));
 }
+
 .enabled\:text-white:enabled {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
+
 .disabled\:cursor-not-allowed:disabled {
   cursor: not-allowed;
 }
+
 .disabled\:bg-gray-400:disabled {
   --tw-bg-opacity: 1;
   background-color: rgb(156 163 175 / var(--tw-bg-opacity, 1));
 }
+
 .disabled\:bg-neutral-100:disabled {
   --tw-bg-opacity: 1;
   background-color: rgb(245 245 245 / var(--tw-bg-opacity, 1));
 }
+
 .disabled\:text-neutral-400:disabled {
   --tw-text-opacity: 1;
   color: rgb(163 163 163 / var(--tw-text-opacity, 1));
 }
+
 @media (min-width: 640px) {
-
-  .sm\:mb-10 {
-    margin-bottom: 2.5rem;
-  }
-
-  .sm\:inline {
-    display: inline;
-  }
 
   .sm\:px-6 {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
-
-  .sm\:text-2xl {
-    font-size: 1.5rem;
-    line-height: 2rem;
-  }
-
-  .sm\:text-4xl {
-    font-size: 2.25rem;
-    line-height: 2.5rem;
-  }
 }
+
 @media (min-width: 768px) {
 
   .md\:sticky {
@@ -2686,6 +2747,10 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1;
   }
 
+  .md\:text-\[22px\] {
+    font-size: 22px;
+  }
+
   .md\:text-\[34px\] {
     font-size: 34px;
   }
@@ -2695,6 +2760,7 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.75rem;
   }
 }
+
 @media (min-width: 1024px) {
 
   .lg\:flex {

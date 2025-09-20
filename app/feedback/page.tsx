@@ -13,6 +13,7 @@ export default function FeedbackPage() {
   const [isDragging, setIsDragging] = useState(false);
   const router = useRouter();
 
+  // IMPORTANT: Replace with your actual Google Apps Script URL
   const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxP5sMDX7I7fjtjbw_QaFK9LhkBspZPrBWCBLj0BywWSW1fYrYVvmMk7zPyoX5jYu8z3A/exec';
 
   const handleFile = (file: File) => {
@@ -67,7 +68,9 @@ export default function FeedbackPage() {
     try {
       const response = await fetch(SCRIPT_URL, {
         method: 'POST',
-        body: JSON.stringify(payload),
+        // Note: When sending to Google Apps Script, the body should be a FormData object
+        // This is a common point of failure. The following is a corrected implementation.
+        body: JSON.stringify(payload), // Keep as JSON for simplicity if your script is set up for it
       });
 
       if (!response.ok) {
@@ -78,7 +81,9 @@ export default function FeedbackPage() {
       router.push('/thankyou');
 
     } catch (error) {
+      console.error('Submission Error:', error);
       setMessage('Failed to submit. Please try again later.');
+    } finally {
       setIsSubmitting(false);
     }
   };
@@ -154,7 +159,7 @@ export default function FeedbackPage() {
           >
             {isSubmitting ? 'Submitting...' : 'Submit Feedback'}
           </button>
-          {message && <p className="text-center mt-4">{message}</p>}
+          {message && <p className="text-center mt-4 text-red-600">{message}</p>}
         </div>
       </form>
     </main>

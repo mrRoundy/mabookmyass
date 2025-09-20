@@ -16,10 +16,20 @@
       "static/chunks/main-app.js",
       "static/chunks/app/bookshelf/page.js"
     ],
-    "/book-details/[id]/page": [
+    "/why-us/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/book-details/[id]/page.js"
+      "static/chunks/app/why-us/page.js"
+    ],
+    "/prompt/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/prompt/page.js"
+    ],
+    "/feedback/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/feedback/page.js"
     ]
   }
 }

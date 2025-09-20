@@ -3,7 +3,7 @@
 import type { Metadata } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import ConditionalFooter from '@/components/ConditionalFooter'; // Import the new component
 import './globals.css';
 
 const inter = Inter({ 
@@ -37,7 +37,7 @@ export default function RootLayout({
       <body className={`${inter.variable} ${playfairDisplay.variable} font-sans bg-classic-cream flex flex-col min-h-full`}>
         <Navbar />
         <main className="flex-grow">{children}</main>
-        <Footer />
+        <ConditionalFooter /> {/* Use the new conditional component here */}
       </body>
     </html>
   );
