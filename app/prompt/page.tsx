@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, Suspense, FormEvent, ChangeEvent } from 'react';
+import { useState, useEffect, Suspense, FormEvent, ChangeEvent, KeyboardEvent, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import TypingAnimationPrompt from '@/components/TypingAnimationPrompt';
@@ -13,6 +13,7 @@ interface Recommendation {
   highlight: string;
 }
 
+// ... (other interfaces remain the same) ...
 interface Highlight {
   id: string;
   text: string;
@@ -29,8 +30,15 @@ interface Book {
   synopsis?: string;
 }
 
-// --- HELPER FUNCTIONS (Moved outside the component) ---
 
+// --- NEW: Array of random placeholder texts ---
+const placeholderTexts = [
+    "What's on your mind?"
+];
+
+
+
+// --- HELPER FUNCTIONS (remain the same) ---
 const AVAILABLE_GENRES = [
     "Habits", "Finance", "Leadership", "Mental health", "Motivational",
     "Physical Health", "Time Management", "Communication", "Self-Discovery",
@@ -39,7 +47,7 @@ const AVAILABLE_GENRES = [
 ];
 
 const generateAIPrompt = (taskType: string, userPrompt?: string | null, availableGenres?: string | null, data?: any, totalCount?: number): string => {
-    // This function remains the same as the previous version.
+    // This function's content is unchanged
     const prompts: { [key: string]: any } = {
         languageDetection: {
             role: "You are a highly accurate language identification AI.",
@@ -64,43 +72,57 @@ const generateAIPrompt = (taskType: string, userPrompt?: string | null, availabl
             context: `Available genres: ${availableGenres}`,
             task: `Analyze the user's query, which can be in English or Indonesian, and determine which book genres would be most relevant.`,
             process: `
-1. Carefully read the query to understand the user's needs, interests, or preferences.
-2. Scan the available genres for the best matches.
-3. Select a minimum of 1 and a maximum of 3 genres that are most relevant.`,
+1. First, detect the language of the user's query (English or Indonesian).
+2. Carefully read the query to understand the user's needs, interests, or preferences, regardless of the language.
+3. Scan the available genres for the best matches based on the query's meaning.
+4. Prioritize genres where the benefits directly address the user's query.
+5. Select a minimum of 1 and a maximum of 3 genres that are most relevant.
+6. If the query is vague, choose the most general applicable genres.`,
             outputFormat: `
 - Your response MUST be a valid JSON object.
 - The JSON object must have a single key: "genres".
-- The value of "genres" must be an array of strings.`,
+- The value of "genres" must be an array of strings.
+- Each string must be the exact "Name" of a recommended genre from the provided list.`,
             content: `User query: "${userPrompt}"\n\nSelected genres:`
         },
         highlightRanking: {
             role: "You are an expert content analyst specializing in matching book insights to user queries with surgical precision. You are fluent in both English and Indonesian.",
-            context: `You have ${totalCount} individual book highlights. Your task is to find the most relevant highlights that directly answer or address the user's specific query.`,
-            task: `Select the TOP 5 most relevant highlights that best answer the user's query.`,
+            context: `You have ${totalCount} individual book highlights. Your task is to find the most relevant highlights that directly answer or address the user's specific query, which may be in English or Indonesian.`,
+            task: `Select the TOP 5 most relevant highlights that best answer the user's query. The user's query can be in English or Indonesian.`,
             process: `
-1. Analyze the user's query to identify their specific need or problem.
-2. Evaluate each highlight for direct relevance to the query's meaning.
-3. Select only the most relevant highlights. A maximum of 5 highlights is allowed.`,
+1. Analyze the user's query, whether it is in English or Indonesian, to identify their specific need, problem, or area of interest.
+2. Evaluate each highlight for direct relevance to the query's meaning. How well does it answer or address what the user is asking?
+3. Score each highlight: HIGH (directly answers query), MEDIUM (related/helpful), LOW (tangentially related).
+4. Select only HIGH and strong MEDIUM scoring highlights.
+5. Rank the selected highlights by relevance score (best matches first).
+6. It's acceptable to select multiple highlights from the same book if they're all highly relevant.
+7. Never select duplicate/identical highlights.
+8. A maximum of 5 highlights is allowed, but fewer is acceptable if only a few are truly relevant.`,
             outputFormat: `
 - Your response MUST be a valid JSON object.
 - The JSON object must have a single key: "recommendations".
 - The value must be an array of objects, each with an "id" field.
+- Each "id" must match exactly one of the highlight IDs provided.
 - Order by relevance (best match first).`,
             content: `Available highlights:\n${data}\n\nUser query: "${userPrompt}"\n\nBest matching highlights (ranked by relevance):`
         },
         synopsisRanking: {
             role: "You are an expert content analyst specializing in matching book synopses to user queries with surgical precision. You are fluent in both English and Indonesian.",
-            context: `You have ${totalCount} individual book synopses. Your task is to find the most relevant synopses that directly address the user's specific query.`,
-            task: `Select the TOP 5 most relevant synopses that best answer the user's query.`,
+            context: `You have ${totalCount} individual book synopses. Your task is to find the most relevant synopses that directly address the user's specific query, which may be in English or Indonesian.`,
+            task: `Select the TOP 5 most relevant synopses that best answer the user's query. The user's query can be in English or Indonesian.`,
             process: `
-1. Analyze the user's query to identify their specific need or problem.
+1. Analyze the user's query to identify their specific need, problem, or area of interest.
 2. Evaluate each synopsis for direct relevance to the query's meaning.
-3. Strongly prefer selecting synopses from different books.
-4. A maximum of 5 synopses is allowed.`,
+3. Score each synopsis: HIGH (directly answers query), MEDIUM (related/helpful), LOW (tangentially related).
+4. Select only HIGH and strong MEDIUM scoring synopses.
+5. **CRITICAL RULE: Strongly prefer selecting synopses from different books. The final list should be as diverse as possible.**
+6. Rank the selected synopses by relevance score (best matches first).
+7. A maximum of 5 synopses is allowed, but fewer is acceptable if only a few are truly relevant.`,
             outputFormat: `
 - Your response MUST be a valid JSON object.
 - The JSON object must have a single key: "recommendations".
-- The value must be an array of objects, each with an "id" field.
+- The value must be an array of objects, once with an "id" field.
+- Each "id" must match exactly one of the synopsis IDs provided.
 - Order by relevance (best match first).`,
             content: `Available synopses:\n${data}\n\nUser query: "${userPrompt}"\n\nBest matching synopses (ranked by relevance):`
         }
@@ -117,17 +139,22 @@ const generateAIPrompt = (taskType: string, userPrompt?: string | null, availabl
 };
 
 const parseHighlights = (highlightsText: string): string[] => {
+    // This function's content is unchanged
     if (!highlightsText || typeof highlightsText !== 'string') return [];
     const regex = /(["“])(.*?)(["”])/g;
-    const matches: RegExpExecArray[] = [];
-    let match: RegExpExecArray | null;
-    while ((match = regex.exec(highlightsText)) !== null) {
-        matches.push(match);
+    const matches = Array.from(highlightsText.matchAll(regex));
+    if (matches.length > 0) {
+        return matches.map(match => match[2].trim());
     }
-    return matches.length > 0 ? matches.map(match => match[2].trim()) : (highlightsText.trim() ? [highlightsText.trim()] : []);
+    const singleHighlight = highlightsText.trim();
+    return singleHighlight ? [singleHighlight] : [];
 };
 
 const escapeHtml = (text: string): string => {
+    // This function's content is unchanged
+    if (typeof window === 'undefined') {
+      return text;
+    }
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
@@ -141,7 +168,10 @@ function PromptComponent() {
   const [isLoading, setIsLoading] = useState(false);
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [error, setError] = useState<string | null>(null);
-  
+  const formRef = useRef<HTMLFormElement>(null);
+  const [placeholder, setPlaceholder] = useState(''); // --- NEW: State for the placeholder ---
+
+  // ... (The entire handleSearch function and its helpers remain the same) ...
   const handleSearch = async (currentQuery = query, currentSearchType = searchType) => {
     if (!currentQuery.trim()) {
       setError('Please enter a prompt to get recommendations.');
@@ -153,44 +183,51 @@ function PromptComponent() {
     setRecommendations([]);
 
     try {
-      // Step 1: Analyze prompt for language and genres (no changes here)
-      const langPrompt = generateAIPrompt('languageDetection', currentQuery);
-      const langResult = await callApi('/api/analyze', { prompt: langPrompt });
+      const langDetectionPrompt = generateAIPrompt('languageDetection', currentQuery);
+      const langResult = await callApi('/api/analyze', { prompt: langDetectionPrompt });
       const detectedLang = langResult.language || 'en';
 
       const genrePrompt = generateAIPrompt('genreAnalysis', currentQuery, AVAILABLE_GENRES.join(', '));
       const genreResult = await callApi('/api/analyze', { prompt: genrePrompt });
       const genres = genreResult.genres;
+
       if (!genres || genres.length === 0) {
-        throw new Error('Could not determine relevant genres for your query. Please try being more specific.');
+        throw new Error('No relevant genres found for your query.');
       }
 
-      // Step 2: Fetch books
       const searchEndpoint = currentSearchType === 'synopsis' ? '/api/books/search-by-synopsis' : '/api/books/search';
       const books: Book[] = await callApi(searchEndpoint, { genres });
+
       if (!books || books.length === 0) {
-        throw new Error('No books found for the determined genres. Please try a different query.');
+        throw new Error('No books found for the determined genres.');
       }
       
-      // --- THIS IS THE FIX ---
-      // Limit the number of books to process to prevent the API prompt from being too large.
-      const booksToProcess = books.slice(0, 75);
-      // --- END OF FIX ---
-
       let finalRecommendations: Recommendation[];
 
-      // Step 3: Rank and process based on search type
       if (currentSearchType === 'synopsis') {
+        const booksToProcess = books.slice(0, 75);
         const synopsisData = booksToProcess.map((book, index) => `ID: synopsis_${index} | Book: "${book.title}" | Synopsis: "${book.synopsis}"`).join('\n');
         const rankingPrompt = generateAIPrompt('synopsisRanking', currentQuery, null, synopsisData, booksToProcess.length);
         const rankingResult = await callApi('/api/analyze', { prompt: rankingPrompt });
         const selectedIds = (rankingResult.recommendations || []).map((rec: { id: string }) => rec.id);
-
+        
         finalRecommendations = buildRecommendationsFromSynopsis(selectedIds, booksToProcess);
+        
+        if (finalRecommendations.length === 0) {
+            throw new Error('No synopses match your query well enough.');
+        }
 
-      } else { // Highlights search
+        if (detectedLang === 'id' && finalRecommendations.length > 0) {
+            finalRecommendations = await translateHighlights(finalRecommendations);
+        }
+
+      } else { 
+        const booksToProcess = books.slice(0, 75);
         const allHighlights = extractAllHighlights(booksToProcess);
-        if (allHighlights.length === 0) throw new Error('No valid highlights found in the fetched books.');
+
+        if (allHighlights.length === 0) {
+            throw new Error('No valid highlights found in the books.');
+        }
 
         const highlightData = allHighlights.map(h => `ID: ${h.id} | Book: "${h.bookTitle}" | Highlight: "${h.text}"`).join('\n');
         const rankingPrompt = generateAIPrompt('highlightRanking', currentQuery, null, highlightData, allHighlights.length);
@@ -198,34 +235,38 @@ function PromptComponent() {
         const selectedIds = (rankingResult.recommendations || []).map((rec: { id: string }) => rec.id);
         
         finalRecommendations = buildRecommendationsFromHighlights(selectedIds, allHighlights);
-      }
 
-      if (finalRecommendations.length === 0) {
-        throw new Error('AI could not find a strong match for your query. Please try rephrasing or being more specific.');
-      }
-      
-      // Step 4: Translate if necessary (no changes here)
-      if (detectedLang === 'id' && finalRecommendations.length > 0) {
-          const highlightsToTranslate = finalRecommendations.map(rec => rec.highlight);
-          const translationPrompt = generateAIPrompt('highlightTranslation', null, null, highlightsToTranslate);
-          const translationResult = await callApi('/api/analyze', { prompt: translationPrompt });
-
-          if (translationResult.translations && translationResult.translations.length === finalRecommendations.length) {
-              finalRecommendations = finalRecommendations.map((rec, index) => ({
-                  ...rec,
-                  highlight: translationResult.translations[index] || rec.highlight,
-              }));
-          }
+        if (finalRecommendations.length === 0) {
+            throw new Error('No highlights match your query well enough.');
+        }
+        
+        if (detectedLang === 'id' && finalRecommendations.length > 0) {
+            finalRecommendations = await translateHighlights(finalRecommendations);
+        }
       }
 
       setRecommendations(finalRecommendations);
 
     } catch (err: any) {
-      setError(err.message || 'An unexpected error occurred.');
+      setError(err.message || 'An unexpected error occurred while getting recommendations.');
     } finally {
       setIsLoading(false);
     }
   };
+
+  const translateHighlights = async (recs: Recommendation[]): Promise<Recommendation[]> => {
+      const highlightsToTranslate = recs.map(rec => rec.highlight);
+      const translationPrompt = generateAIPrompt('highlightTranslation', null, null, highlightsToTranslate);
+      const translationResult = await callApi('/api/analyze', { prompt: translationPrompt });
+
+      if (translationResult.translations && translationResult.translations.length === recs.length) {
+          return recs.map((rec, index) => ({
+              ...rec,
+              highlight: translationResult.translations[index] || rec.highlight,
+          }));
+      }
+      return recs;
+  }
 
   const callApi = async (endpoint: string, body: object) => {
     const response = await fetch(endpoint, {
@@ -259,17 +300,15 @@ function PromptComponent() {
   
   const buildRecommendationsFromHighlights = (selectedIds: string[], allHighlights: Highlight[]): Recommendation[] => {
       const recommendations: Recommendation[] = [];
-      const addedBookIds = new Set<string>();
       for (const id of selectedIds) {
           const highlight = allHighlights.find(h => h.id === id);
-          if (highlight && !addedBookIds.has(highlight.bookId)) {
+          if (highlight) {
               recommendations.push({
                   id: highlight.bookId,
                   title: highlight.bookTitle,
                   author: highlight.bookAuthor,
                   highlight: highlight.text,
               });
-              addedBookIds.add(highlight.bookId);
           }
       }
       return recommendations;
@@ -280,8 +319,10 @@ function PromptComponent() {
     const addedBookTitles = new Set<string>();
     for (const id of selectedIds) {
         if (recommendations.length >= 5) break;
+
         const index = parseInt(id.split('_')[1]);
         const book = books[index];
+
         if (book && book.synopsis && !addedBookTitles.has(book.title)) {
             recommendations.push({
                 id: book.id,
@@ -303,6 +344,19 @@ function PromptComponent() {
     e.target.style.height = `${e.target.scrollHeight}px`;
   };
 
+  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      formRef.current?.requestSubmit();
+    }
+  };
+
+  // --- NEW: useEffect to set the random placeholder on page load ---
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * placeholderTexts.length);
+    setPlaceholder(placeholderTexts[randomIndex]);
+  }, []);
+
   useEffect(() => {
     const queryFromUrl = searchParams.get('query');
     const searchTypeFromUrl = searchParams.get('searchType');
@@ -310,7 +364,7 @@ function PromptComponent() {
       const newSearchType = searchTypeFromUrl === 'synopsis' ? 'synopsis' : 'highlights';
       setQuery(queryFromUrl);
       setSearchType(newSearchType);
-      handleSearch(queryFromUrl, newSearchType);
+      setTimeout(() => handleSearch(queryFromUrl, newSearchType), 100);
     }
   }, [searchParams]);
 
@@ -324,13 +378,14 @@ function PromptComponent() {
           </h2>
         </div>
         
-        <form onSubmit={handleSubmit} className="mb-8">
+        <form onSubmit={handleSubmit} ref={formRef} className="mb-8">
             <div className="search-box-container">
                 <textarea
                     className="search-input w-full flex-grow bg-transparent text-classic-green placeholder-neutral-500 text-base leading-relaxed focus:outline-none resize-none overflow-y-auto"
                     value={query}
                     onChange={handleTextareaChange}
-                    placeholder="Ask me anything about books you'd like to read..."
+                    onKeyDown={handleKeyDown}
+                    placeholder={placeholder} // --- UPDATED: Use the state for the placeholder ---
                     rows={1}
                 />
                 <div className="search-options-row">

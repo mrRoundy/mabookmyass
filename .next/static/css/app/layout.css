@@ -1041,11 +1041,11 @@ video {
 .h-full {
   height: 100%;
 }
+.h-12 {
+  height: 3rem;
+}
 .max-h-24 {
   max-height: 6rem;
-}
-.max-h-\[280px\] {
-  max-height: 280px;
 }
 .min-h-\[calc\(100vh-80px\)\] {
   min-height: calc(100vh - 80px);
@@ -1071,14 +1071,14 @@ video {
 .w-\[200px\] {
   width: 200px;
 }
-.w-\[640px\] {
-  width: 640px;
-}
 .w-\[7em\] {
   width: 7em;
 }
 .w-full {
   width: 100%;
+}
+.w-12 {
+  width: 3rem;
 }
 .max-w-2xl {
   max-width: 42rem;
@@ -1094,6 +1094,9 @@ video {
 }
 .max-w-7xl {
   max-width: 80rem;
+}
+.max-w-\[640px\] {
+  max-width: 640px;
 }
 .max-w-md {
   max-width: 28rem;
@@ -1126,6 +1129,9 @@ video {
 }
 .resize-none {
   resize: none;
+}
+.resize {
+  resize: both;
 }
 .scroll-mt-20 {
   scroll-margin-top: 5rem;
@@ -1307,10 +1313,6 @@ video {
 }
 .bg-opacity-10 {
   --tw-bg-opacity: 0.1;
-}
-.object-contain {
-  -o-object-fit: contain;
-     object-fit: contain;
 }
 .p-10 {
   padding: 2.5rem;
@@ -1543,6 +1545,9 @@ video {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
+.text-\[\#173F25\]\/80 {
+  color: rgb(23 63 37 / 0.8);
+}
 .placeholder-neutral-500::-moz-placeholder {
   --tw-placeholder-opacity: 1;
   color: rgb(115 115 115 / var(--tw-placeholder-opacity, 1));
@@ -1684,8 +1689,10 @@ h1, h2, h3, h4, h5, h6 {
     background-color: #e8d2be;
     border-radius: 26px;
     margin-top: 3rem;
-    padding: 2rem 1.5rem;
-    overflow: hidden;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
 @media (min-width: 1024px) {
     .hero-banner {
@@ -1740,12 +1747,16 @@ h1, h2, h3, h4, h5, h6 {
     color: #504646;
 }
 
+/* Find and replace this rule */
 .hero-books {
     flex: 1 1 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     min-width: 0;
+    /* Add the following two lines */
+    padding-top: 2.5rem;   /* Increased padding */
+    padding-bottom: 2rem; /* Increased padding */
 }
 
 /* Styles for the Book Carousel Component */
@@ -1755,31 +1766,39 @@ h1, h2, h3, h4, h5, h6 {
     max-width: 640px;
     margin: 0 auto;
     overflow: hidden;
+    padding-top: 1.5rem;    /* This creates space for the book to scale up */
+    padding-bottom: 1.5rem; /* This creates space for the book to scale down */
     -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
     mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
 }
 .book-carousel {
     display: flex;
 }
+/* Find the old .hero-books .book-item rule and replace it with this */
 .hero-books .book-item {
-    flex: 0 0 150px;
+    flex: 0 0 200px;
     margin: 0 10px;
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
-@media (min-width: 768px) {
+
+/* Add this new rule for mobile devices */
+@media (max-width: 767px) {
     .hero-books .book-item {
-        flex: 0 0 200px;
+        flex: 0 0 150px;
     }
 }
+
+/* Find and replace this rule */
 .hero-books .book-item img {
     width: 100%;
-    max-height: 280px;
-    -o-object-fit: contain;
-       object-fit: contain;
+    aspect-ratio: 2 / 3; /* This ensures correct book cover proportions */
+    -o-object-fit: cover;
+       object-fit: cover; /* CHANGED: from contain */
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .hero-books .book-item.active img {
     transform: scale(1.15);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
@@ -1794,8 +1813,10 @@ h1, h2, h3, h4, h5, h6 {
     .hero-content {
         flex-direction: column;
         align-items: center;
+        gap: 2rem; /* This reduces the large gap on smaller screens */
     }
 }
+
 
 @media (max-width: 768px) {
     .hero-text h1 {
@@ -2598,8 +2619,6 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 0.5rem; /* Space between textarea and buttons */
-    border-top: 1px solid #e5e7eb; /* Subtle separator line */
 }
 
 /* Search Option Buttons (By Highlights, By Synopsis) */

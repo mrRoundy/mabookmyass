@@ -54,14 +54,23 @@ export default function WhyUsPage() {
           </div>
           <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
             <div className="bg-white border border-[#173F25]/10 p-8 rounded-lg text-center reveal">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 mx-auto mb-5 text-[#173F25]/80" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v.01M12 6v.01M12 18v-2m0 2v.01M12 21v-1.01M12 3v1.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
               <h4 className="text-2xl font-bold text-[#173F25] mb-2">Paid Promotions</h4>
               <p className="text-[#173F25]/70">Recommendations influenced by marketing budgets, not genuine merit or relevance to you.</p>
             </div>
             <div className="bg-white border border-[#173F25]/10 p-8 rounded-lg text-center reveal" style={{ transitionDelay: '200ms' }}>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 mx-auto mb-5 text-[#173F25]/80" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
               <h4 className="text-2xl font-bold text-[#173F25] mb-2">Mismatched Tastes</h4>
               <p className="text-[#173F25]/70">Suggestions based on a reviewer's personal taste, which rarely aligns perfectly with your own.</p>
             </div>
             <div className="bg-white border border-[#173F25]/10 p-8 rounded-lg text-center reveal" style={{ transitionDelay: '400ms' }}>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 mx-auto mb-5 text-[#173F25]/80" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+              </svg>
               <h4 className="text-2xl font-bold text-[#173F25] mb-2">Flawed Algorithms</h4>
               <p className="text-[#173F25]/70">Systems designed to show you what's popular, not what's profoundly right for you.</p>
             </div>
@@ -116,21 +125,30 @@ export default function WhyUsPage() {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-6">
            <div className="text-center max-w-3xl mx-auto">
-              <h2 className="text-4xl md:text-5xl font-bold text-[#173F25] mb-4">Fairer, heller(and fuck you ucup), Faster, More Authentic.</h2>
+              <h2 className="text-4xl md:text-5xl font-bold text-[#173F25] mb-4">Fairer, Faster, More Authentic.</h2>
               <p className="text-lg text-[#173F25]/70 mb-16">
-                 By focusing on what's <strong className="font-semibold text-[#173F25]">inside of ziziy</strong> the book, we deliver a recommendation experience you can finally trust.
+                 By focusing on what's <strong className="font-semibold text-[#173F25]"></strong> the book, we deliver a recommendation experience you can finally trust.
               </p>
           </div>
           <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
                <div className="text-center reveal p-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto mb-4 text-[#173F25]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                  </svg>
                   <h4 className="text-2xl font-bold mb-2">Find Your Perfect Match</h4>
                   <p className="text-[#173F25]/70">Discover books that fit your specific needs and interests, whether for learning, leisure, or inspiration.</p>
               </div>
                <div className="text-center reveal p-6" style={{ transitionDelay: '200ms' }}>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto mb-4 text-[#173F25]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                  </svg>
                   <h4 className="text-2xl font-bold mb-2">Unlock Deeper Knowledge</h4>
                   <p className="text-[#173F25]/70">Use our platform for self-development, to expand your expertise, or to find your next source of inspiration.</p>
               </div>
                <div className="text-center reveal p-6" style={{ transitionDelay: '400ms' }}>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto mb-4 text-[#173F25]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
                   <h4 className="text-2xl font-bold mb-2">Experience True Transparency</h4>
                   <p className="text-[#173F25]/70">Get fairer, more honest, and deeply relevant recommendations that honor your unique perspective.</p>
               </div>
