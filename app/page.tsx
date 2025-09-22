@@ -17,7 +17,6 @@ export default function HomePage() {
               AI-Powered Book Discovery That Solves Your Problems, Not Someone Else’s Opinions
             </p>
           </div>
-          {/* --- CHANGE THIS LINE --- */}
           <div className="hero-books px-4 md:px-0">
             <BookCarousel />
           </div>
@@ -25,11 +24,11 @@ export default function HomePage() {
       </header>
 
       <main>
-        {/* ... rest of the page remains the same ... */}
         <section className="search-section">
             <div className="text-center text-classic-green mb-10">
               <TypingAnimationMain />
-              <h2 className="font-serif text-[42.6px] font-bold uppercase tracking-widest">
+              {/* --- UPDATED: Smaller font and less letter-spacing on mobile --- */}
+              <h2 className="font-serif text-2xl md:text-[42.6px] font-bold uppercase tracking-normal md:tracking-widest">
                   Begin by Asking...
               </h2>
             </div>
@@ -38,6 +37,7 @@ export default function HomePage() {
             </div>
         </section>
 
+        {/* ... rest of the page remains the same ... */}
         <section className="recommendations">
             <div className="recommendation-header">
                 <h2>Book recommendation</h2>

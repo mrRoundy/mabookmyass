@@ -16,11 +16,8 @@ export default function HomePrompt() {
   };
   
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    // Check if Enter is pressed without the Shift key
     if (e.key === 'Enter' && !e.shiftKey) {
-      // Prevent the default action (adding a new line)
       e.preventDefault();
-      // Trigger the form submission
       formRef.current?.requestSubmit();
     }
   };
@@ -41,24 +38,25 @@ export default function HomePrompt() {
                 value={query}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
-                placeholder="Ask me anything about books you'd like to read..."
+                placeholder="What's on your Mind?."
                 rows={1}
             />
             <div className="flex items-center justify-between mt-3">
                 <div className="flex items-center space-x-2">
+                    {/* --- UPDATED: Responsive button text --- */}
                     <button
                         type="button"
                         onClick={() => setSearchType('highlights')}
                         className={`search-option-btn font-sans ${searchType === 'highlights' ? 'active' : ''}`}
                     >
-                        By Highlights
+                        <span className="hidden md:inline">By </span>Highlights
                     </button>
                     <button
                         type="button"
                         onClick={() => setSearchType('synopsis')}
                         className={`search-option-btn font-sans ${searchType === 'synopsis' ? 'active' : ''}`}
                     >
-                        By Synopsis
+                        <span className="hidden md:inline">By </span>Synopsis
                     </button>
                 </div>
                 <button

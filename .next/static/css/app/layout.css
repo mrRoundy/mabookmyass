@@ -1014,6 +1014,9 @@ video {
 .h-20 {
   height: 5rem;
 }
+.h-24 {
+  height: 6rem;
+}
 .h-5 {
   height: 1.25rem;
 }
@@ -1041,9 +1044,6 @@ video {
 .h-full {
   height: 100%;
 }
-.h-24 {
-  height: 6rem;
-}
 .max-h-24 {
   max-height: 6rem;
 }
@@ -1068,6 +1068,9 @@ video {
 .w-16 {
   width: 4rem;
 }
+.w-24 {
+  width: 6rem;
+}
 .w-5 {
   width: 1.25rem;
 }
@@ -1085,9 +1088,6 @@ video {
 }
 .w-full {
   width: 100%;
-}
-.w-24 {
-  width: 6rem;
 }
 .max-w-2xl {
   max-width: 42rem;
@@ -1443,9 +1443,6 @@ video {
 .text-\[28px\] {
   font-size: 28px;
 }
-.text-\[42\.6px\] {
-  font-size: 42.6px;
-}
 .text-base {
   font-size: 1rem;
   line-height: 1.5rem;
@@ -1501,6 +1498,9 @@ video {
 }
 .tracking-widest {
   letter-spacing: 0.1em;
+}
+.tracking-normal {
+  letter-spacing: 0em;
 }
 .text-\[\#173F25\] {
   --tw-text-opacity: 1;
@@ -2785,69 +2785,95 @@ h1, h2, h3, h4, h5, h6 {
     display: none;
   }
 }
+
+/* Add this new media query at the end of the file */
+
+@media (max-width: 640px) {
+  .search-option-btn {
+    padding: 0.25rem 0.75rem; /* 4px vertical, 12px horizontal */
+    font-size: 0.8rem; /* 12.8px */
+  }
+}
+
 .hover\:-translate-y-1:hover {
   --tw-translate-y: -0.25rem;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
+
 .hover\:scale-105:hover {
   --tw-scale-x: 1.05;
   --tw-scale-y: 1.05;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
+
 .hover\:bg-\[\#FDF9F6\]:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(253 249 246 / var(--tw-bg-opacity, 1));
 }
+
 .hover\:bg-gray-100:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
 }
+
 .hover\:text-gray-300:hover {
   --tw-text-opacity: 1;
   color: rgb(209 213 219 / var(--tw-text-opacity, 1));
 }
+
 .hover\:text-white:hover {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
+
 .hover\:underline:hover {
   text-decoration-line: underline;
 }
+
 .hover\:opacity-90:hover {
   opacity: 0.9;
 }
+
 .hover\:shadow-xl:hover {
   --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
+
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
+
 .enabled\:bg-classic-green:enabled {
   --tw-bg-opacity: 1;
   background-color: rgb(23 63 37 / var(--tw-bg-opacity, 1));
 }
+
 .enabled\:text-white:enabled {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
+
 .disabled\:cursor-not-allowed:disabled {
   cursor: not-allowed;
 }
+
 .disabled\:bg-gray-400:disabled {
   --tw-bg-opacity: 1;
   background-color: rgb(156 163 175 / var(--tw-bg-opacity, 1));
 }
+
 .disabled\:bg-neutral-100:disabled {
   --tw-bg-opacity: 1;
   background-color: rgb(245 245 245 / var(--tw-bg-opacity, 1));
 }
+
 .disabled\:text-neutral-400:disabled {
   --tw-text-opacity: 1;
   color: rgb(163 163 163 / var(--tw-text-opacity, 1));
 }
+
 @media (min-width: 640px) {
 
   .sm\:px-6 {
@@ -2855,10 +2881,15 @@ h1, h2, h3, h4, h5, h6 {
     padding-right: 1.5rem;
   }
 }
+
 @media (min-width: 768px) {
 
   .md\:sticky {
     position: sticky;
+  }
+
+  .md\:inline {
+    display: inline;
   }
 
   .md\:h-\[56px\] {
@@ -2931,11 +2962,20 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 34px;
   }
 
+  .md\:text-\[42\.6px\] {
+    font-size: 42.6px;
+  }
+
   .md\:text-xl {
     font-size: 1.25rem;
     line-height: 1.75rem;
   }
+
+  .md\:tracking-widest {
+    letter-spacing: 0.1em;
+  }
 }
+
 @media (min-width: 1024px) {
 
   .lg\:flex {
