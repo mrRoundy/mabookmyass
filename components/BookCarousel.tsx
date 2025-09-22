@@ -106,12 +106,14 @@ export default function BookCarousel() {
 
   if (loading) {
     return (
-      // --- CHANGE THE HEIGHT IN THIS LINE BACK TO 280px ---
       <div className="carousel-container h-[280px] flex items-center justify-center">
         <div className="carousel-loading text-gray-700">Loading books...</div>
       </div>
     );
   }
+
+  // --- UPDATED: Simplified and corrected transform logic ---
+  const transformStyle = `translateX(calc(-${currentIndex * itemWidth}px + 50% - ${itemWidth / 2}px))`;
 
   return (
     <div 
@@ -124,7 +126,7 @@ export default function BookCarousel() {
         ref={carouselRef}
         className="book-carousel flex items-center"
         style={{
-          transform: `translateX(calc(-${currentIndex * itemWidth}px + 50% - ${itemWidth / 2}px))`,
+          transform: transformStyle, // Use the updated style
           transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
         }}
       >

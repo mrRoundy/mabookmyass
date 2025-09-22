@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import Link from 'next/link';
 import BookCarousel from '@/components/BookCarousel';
 import HomePrompt from '@/components/HomePrompt';
@@ -14,25 +13,26 @@ export default function HomePage() {
         <div className="hero-content">
           <div className="hero-text">
             <h1>MaBook</h1>
-            {/* Added font-light class to this paragraph */}
             <p className="font-serif text-[28px] md:text-[34px] leading-tight text-[#504646] mb-12 max-w-3xl mx-auto">
-    AI-Powered Book Discovery That Solves Your Problems, Not Someone Else’s Opinions
-</p>
+              AI-Powered Book Discovery That Solves Your Problems, Not Someone Else’s Opinions
+            </p>
           </div>
-          <div className="hero-books">
+          {/* --- CHANGE THIS LINE --- */}
+          <div className="hero-books px-4 md:px-0">
             <BookCarousel />
           </div>
         </div>
       </header>
 
       <main>
+        {/* ... rest of the page remains the same ... */}
         <section className="search-section">
             <div className="text-center text-classic-green mb-10">
-    <TypingAnimationMain />
-    <h2 className="font-serif text-[42.6px] font-bold uppercase tracking-widest">
-        Begin by Asking...
-    </h2>
-</div>
+              <TypingAnimationMain />
+              <h2 className="font-serif text-[42.6px] font-bold uppercase tracking-widest">
+                  Begin by Asking...
+              </h2>
+            </div>
             <div className="max-w-4xl mx-auto w-full">
                 <HomePrompt />
             </div>
