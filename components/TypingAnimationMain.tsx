@@ -6,10 +6,10 @@ import { TypeAnimation } from 'react-type-animation';
 // Array of quotes to be randomly selected
 const quotes = [
   "“A Book’s True Worth is Hidden in its Wisdom, NOT its Cover”",
-  "“Within the right pages lies the answer you've been searching for.”",
-  "“A great book is a conversation that shapes your future.”",
-  "“Discovering a good book is like finding a new path on a familiar journey.”",
-  "“The best stories don't just entertain; they build a better you.”"
+  "“Within The Right Pages Lies the Answer you've been Searching for.”",
+  "“A Great Book is a Conversation That Shapes your Future.”",
+  "“Discovering a Good Book is Like Finding a New Path on a Familiar Journey.”",
+  "“The Best Stories Don't Just Entertain, They Build a Better you.”"
 ];
 
 export default function TypingAnimationMain() {

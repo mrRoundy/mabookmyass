@@ -1,5 +1,7 @@
 {
+  "/why-us/page": "app/why-us/page.js",
+  "/feedback/page": "app/feedback/page.js",
   "/page": "app/page.js",
-  "/bookshelf/page": "app/bookshelf/page.js",
-  "/why-us/page": "app/why-us/page.js"
+  "/prompt/page": "app/prompt/page.js",
+  "/thankyou/page": "app/thankyou/page.js"
 }

@@ -30,7 +30,7 @@ export default function Navbar() {
         <div className="container mx-auto flex justify-between items-center relative h-full">
           
           {/* Left-side Desktop Links */}
-          <div className="hidden lg:flex flex-1 justify-start items-center space-x-8">
+          <div className="hidden lg:flex justify-start items-center space-x-8">
             <Link href="/" className="hover:text-gray-300 transition-colors">Home</Link>
             <Link href="/prompt" className="flex items-center hover:text-gray-300 transition-colors">
               <Image src="/image/star.png" alt="Star" width={48} height={48} className="mr-[-0.75em]" />
@@ -41,28 +41,37 @@ export default function Navbar() {
           </div>
 
           {/* Centered Logo */}
-<div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 h-[7em] w-[7em] z-10">
-  <Link href="/" className="relative h-full w-full block">
-    <Image src="/image/logo.png" alt="MaBook Logo" layout="fill" objectFit="contain" />
-  </Link>
-</div>
+          <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 h-[5.5em] w-[5.5em] md:h-[7em] md:w-[7em] z-10">
+            <Link href="/" className="relative h-full w-full block">
+              <Image src="/image/logo.png" alt="MaBook Logo" layout="fill" objectFit="contain" />
+            </Link>
+          </div>
 
           {/* Right-side Desktop Feedback & Mobile Menu Button */}
-          <div className="flex flex-1 justify-end items-center">
+          <div className="flex justify-end items-center">
             <Link href="/feedback" className="hidden lg:flex items-center hover:text-gray-300 transition-colors">
               <span>Feedback</span>
               <Image src="/image/likeanddislike.png" alt="Feedback Icon" width={56} height={56} className="ml-[-0.5em]" />
             </Link>
-            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="lg:hidden text-2xl z-50 font-serif">
-              <span>{isMenuOpen ? 'Close' : 'Menu'}</span>
+            {/* --- UPDATED: Hamburger Button --- */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="lg:hidden text-white z-50 p-2"
+              aria-label="Toggle menu"
+            >
+              <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path className={`transition-all duration-300 ease-in-out ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`} strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
+                <path className={`absolute transition-all duration-300 ease-in-out ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`} strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </button>
           </div>
 
         </div>
       </nav>
 
-      {/* Mobile Menu Flyout */}
-      <div className={`fixed inset-0 bg-[#FDF9F6] z-40 flex flex-col text-[#173F25] font-serif transition-opacity duration-300 ease-in-out lg:hidden ${isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
+      {/* --- UPDATED: Mobile Menu Flyout with Slide-Down Animation --- */}
+      <div className={`fixed inset-0 bg-[#FDF9F6] z-40 flex flex-col text-[#173F25] font-serif lg:hidden
+        transition-transform duration-500 ease-in-out transform ${isMenuOpen ? 'translate-y-0' : '-translate-y-full'}`}>
         <div className="flex-grow w-full max-w-md mx-auto flex flex-col justify-center">
           <Link href="/" onClick={closeMenu} className="mobile-nav-link">Home</Link>
           <Link href="/prompt" onClick={closeMenu} className="mobile-nav-link">MaBook AI</Link>

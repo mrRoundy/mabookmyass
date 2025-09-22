@@ -1008,6 +1008,9 @@ video {
 .h-10 {
   height: 2.5rem;
 }
+.h-12 {
+  height: 3rem;
+}
 .h-16 {
   height: 4rem;
 }
@@ -1026,11 +1029,8 @@ video {
 .h-\[280px\] {
   height: 280px;
 }
-.h-\[7em\] {
-  height: 7em;
-}
-.h-\[81px\] {
-  height: 81px;
+.h-\[5\.5em\] {
+  height: 5.5em;
 }
 .h-\[84px\] {
   height: 84px;
@@ -1041,11 +1041,14 @@ video {
 .h-full {
   height: 100%;
 }
-.h-12 {
-  height: 3rem;
+.h-8 {
+  height: 2rem;
 }
 .max-h-24 {
   max-height: 6rem;
+}
+.min-h-\[80px\] {
+  min-height: 80px;
 }
 .min-h-\[calc\(100vh-80px\)\] {
   min-height: calc(100vh - 80px);
@@ -1059,6 +1062,9 @@ video {
 .w-10 {
   width: 2.5rem;
 }
+.w-12 {
+  width: 3rem;
+}
 .w-16 {
   width: 4rem;
 }
@@ -1071,14 +1077,14 @@ video {
 .w-\[200px\] {
   width: 200px;
 }
-.w-\[7em\] {
-  width: 7em;
+.w-\[5\.5em\] {
+  width: 5.5em;
 }
 .w-full {
   width: 100%;
 }
-.w-12 {
-  width: 3rem;
+.w-8 {
+  width: 2rem;
 }
 .max-w-2xl {
   max-width: 42rem;
@@ -1104,9 +1110,6 @@ video {
 .max-w-xl {
   max-width: 36rem;
 }
-.flex-1 {
-  flex: 1 1 0%;
-}
 .flex-shrink-0 {
   flex-shrink: 0;
 }
@@ -1119,6 +1122,14 @@ video {
 }
 .-translate-y-1\/2 {
   --tw-translate-y: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.-translate-y-full {
+  --tw-translate-y: -100%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.translate-y-0 {
+  --tw-translate-y: 0px;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 .transform {
@@ -1214,6 +1225,9 @@ video {
 }
 .scroll-smooth {
   scroll-behavior: smooth;
+}
+.whitespace-nowrap {
+  white-space: nowrap;
 }
 .rounded {
   border-radius: 0.25rem;
@@ -1331,6 +1345,9 @@ video {
 }
 .p-8 {
   padding: 2rem;
+}
+.p-2 {
+  padding: 0.5rem;
 }
 .px-10 {
   padding-left: 2.5rem;
@@ -1495,6 +1512,9 @@ video {
 .text-\[\#173F25\]\/70 {
   color: rgb(23 63 37 / 0.7);
 }
+.text-\[\#173F25\]\/80 {
+  color: rgb(23 63 37 / 0.8);
+}
 .text-\[\#504646\] {
   --tw-text-opacity: 1;
   color: rgb(80 70 70 / var(--tw-text-opacity, 1));
@@ -1544,9 +1564,6 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-}
-.text-\[\#173F25\]\/80 {
-  color: rgb(23 63 37 / 0.8);
 }
 .placeholder-neutral-500::-moz-placeholder {
   --tw-placeholder-opacity: 1;
@@ -1634,6 +1651,10 @@ video {
 /* Make sure this file is processed by Tailwind CSS via PostCSS, not directly by the browser. */
 
 /* --- Global & Body Styles --- */
+html {
+    overflow-x: hidden;
+}
+
 body {
     background-color: #FCF9F6;
     color: #504646;
@@ -1649,6 +1670,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-right: auto;
     padding-left: 2rem;
     padding-right: 2rem;
+    padding-top: 3rem;
 }
 
 @media (max-width: 768px) {
@@ -1688,7 +1710,6 @@ h1, h2, h3, h4, h5, h6 {
 .hero-banner {
     background-color: #e8d2be;
     border-radius: 26px;
-    margin-top: 3rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
     padding-left: 2rem;
@@ -1846,7 +1867,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .recommendation-header {
-    width: 100vw;
+    width: 100%;
     position: relative;
     left: 50%;
     background-color: #fff;
@@ -1883,7 +1904,6 @@ h1, h2, h3, h4, h5, h6 {
     border: none;
     border-radius: 20px;
     padding: 1rem 4rem;
-    min-width: 500px;
     font-family: var(--font-playfair-display), serif;
     font-size: 4rem;
     font-weight: 700;
@@ -2833,12 +2853,20 @@ h1, h2, h3, h4, h5, h6 {
     position: sticky;
   }
 
-  .md\:h-\[52px\] {
-    height: 52px;
-  }
-
   .md\:h-\[56px\] {
     height: 56px;
+  }
+
+  .md\:h-\[7em\] {
+    height: 7em;
+  }
+
+  .md\:min-h-\[60px\] {
+    min-height: 60px;
+  }
+
+  .md\:w-\[7em\] {
+    width: 7em;
   }
 
   .md\:grid-cols-3 {
@@ -2847,6 +2875,10 @@ h1, h2, h3, h4, h5, h6 {
 
   .md\:grid-cols-\[220px_1fr\] {
     grid-template-columns: 220px 1fr;
+  }
+
+  .md\:whitespace-nowrap {
+    white-space: nowrap;
   }
 
   .md\:p-12 {
