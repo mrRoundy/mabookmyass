@@ -1135,11 +1135,18 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* Add this new media query at the end of the file */
-
-@media (max-width: 640px) {
-  .search-option-btn {
-    padding: 0.25rem 0.75rem; /* 4px vertical, 12px horizontal */
-    font-size: 0.8rem; /* 12.8px */
+/* --- Custom Page Turn Animation --- */
+@keyframes page-turn {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
   }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.page-content-animate {
+  animation: page-turn 0.6s ease-in-out forwards;
 }

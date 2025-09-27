@@ -1,3 +1,4 @@
+// components/HomePrompt.tsx
 'use client';
 
 import { useState, FormEvent, ChangeEvent, KeyboardEvent, useRef } from 'react';
@@ -16,8 +17,11 @@ export default function HomePrompt() {
   };
   
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    // Check if Enter is pressed without the Shift key
     if (e.key === 'Enter' && !e.shiftKey) {
+      // Prevent the default action (adding a new line)
       e.preventDefault();
+      // Trigger the form submission
       formRef.current?.requestSubmit();
     }
   };
@@ -38,25 +42,24 @@ export default function HomePrompt() {
                 value={query}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
-                placeholder="What's on your Mind?."
+                placeholder="What do you want to read about?"
                 rows={1}
             />
             <div className="flex items-center justify-between mt-3">
                 <div className="flex items-center space-x-2">
-                    {/* --- UPDATED: Responsive button text --- */}
                     <button
                         type="button"
                         onClick={() => setSearchType('highlights')}
                         className={`search-option-btn font-sans ${searchType === 'highlights' ? 'active' : ''}`}
                     >
-                        <span className="hidden md:inline">By </span>Highlights
+                        <span className="hidden sm:inline">By </span>Highlights
                     </button>
                     <button
                         type="button"
                         onClick={() => setSearchType('synopsis')}
                         className={`search-option-btn font-sans ${searchType === 'synopsis' ? 'active' : ''}`}
                     >
-                        <span className="hidden md:inline">By </span>Synopsis
+                        <span className="hidden sm:inline">By </span>Synopsis
                     </button>
                 </div>
                 <button

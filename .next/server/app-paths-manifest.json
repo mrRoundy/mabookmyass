@@ -1,8 +1,4 @@
 {
   "/page": "app/page.js",
-  "/why-us/page": "app/why-us/page.js",
-  "/feedback/page": "app/feedback/page.js",
-  "/prompt/page": "app/prompt/page.js",
-  "/bookshelf/page": "app/bookshelf/page.js",
-  "/book-details/[id]/page": "app/book-details/[id]/page.js"
+  "/prompt/page": "app/prompt/page.js"
 }
