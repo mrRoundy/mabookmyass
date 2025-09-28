@@ -156,10 +156,9 @@ function PromptComponent() {
   const formRef = useRef<HTMLFormElement>(null);
   const [placeholder, setPlaceholder] = useState('');
   
-  // State for both Mobile and Desktop Navigation is now managed here
   const [mobileIndex, setMobileIndex] = useState(0);
   const [mobileDirection, setMobileDirection] = useState(0);
-  const [bookCurrentIndex, setBookCurrentIndex] = useState(1); // Start at 1 to show first quote
+  const [bookCurrentIndex, setBookCurrentIndex] = useState(1);
   const [isBookFlipping, setIsBookFlipping] = useState(false);
 
 
@@ -173,7 +172,7 @@ function PromptComponent() {
     setError(null);
     setRecommendations([]);
     setMobileIndex(0); 
-    setBookCurrentIndex(1); // Reset book to show first quote on new search
+    setBookCurrentIndex(1);
 
     try {
       const langDetectionPrompt = generateAIPrompt('languageDetection', currentQuery);
@@ -342,7 +341,6 @@ function PromptComponent() {
     }
   };
   
-  // Universal Navigation Handlers
   const handleNext = () => {
     if (isBookFlipping) return;
     setBookCurrentIndex((prev) => Math.min(prev + 1, recommendations.length));
@@ -356,7 +354,6 @@ function PromptComponent() {
     setMobileIndex(i => Math.max(i - 1, 0));
   };
   
-  // Animation variants for the mobile sheets
   const sheetVariants = {
     enter: (direction: number) => ({
       x: direction > 0 ? '100%' : '-100%',
@@ -390,7 +387,6 @@ function PromptComponent() {
     }
   }, [searchParams]);
 
-  // useEffect for Arrow Key Navigation
   useEffect(() => {
     const handleKeyDown = (e: globalThis.KeyboardEvent) => {
       const textarea = formRef.current?.querySelector('textarea');
@@ -416,11 +412,11 @@ function PromptComponent() {
 
 
   return (
-    <main className="flex-grow flex flex-col items-center bg-classic-cream px-4 sm:px-6 lg:px-8 py-12">
-      <div className="w-full max-w-7xl mx-auto pt-12">
+    <main className="flex-grow flex flex-col items-center justify-center bg-classic-cream px-4 sm:px-6 lg:px-8 min-h-[calc(100vh-5rem)]">
+      <div className="w-full max-w-7xl mx-auto">
         <div className="text-center text-classic-green mb-10 max-w-2xl mx-auto">
           <TypingAnimationPrompt />
-          <h2 className="font-serif text-4xl md:text-6xl font-bold uppercase tracking-wide md:whitespace-nowrap">
+          <h2 className="font-serif text-3xl md:text-6xl font-bold uppercase tracking-wide whitespace-nowrap">
               Begin by Asking...
           </h2>
         </div>
@@ -472,7 +468,6 @@ function PromptComponent() {
 
         {!isLoading && recommendations.length > 0 && (
           <div className="w-full my-16">
-            {/* --- Desktop View --- */}
             <div className="hidden md:block">
               <div className="w-screen relative left-1/2 -translate-x-1/2">
                 <div className="w-[120vw] max-w-none transform translate-x-[11.25%]">
@@ -488,7 +483,6 @@ function PromptComponent() {
               </div>
             </div>
 
-            {/* --- Mobile "Sheets of Paper" View --- */}
             <div className="block md:hidden">
                 <div className="w-full flex flex-col items-center">
                     <div className="relative w-full max-w-sm h-[480px] overflow-hidden">
@@ -510,12 +504,10 @@ function PromptComponent() {
                                 <p className="text-lg leading-relaxed text-gray-800 mb-4 px-4">"{recommendations[mobileIndex].highlight}"</p>
                                 <div className="absolute bottom-2 right-2 text-6xl text-classic-green font-serif">”</div>
 
-                                {/* Author and Book Title Removed */}
                             </motion.div>
                         </AnimatePresence>
                     </div>
 
-                    {/* Mobile Navigation */}
                     <div className="flex items-center justify-center space-x-8 mt-4">
                         <button onClick={handlePrev} disabled={mobileIndex === 0} className="font-sans font-semibold text-classic-green disabled:text-gray-400">
                             Previous

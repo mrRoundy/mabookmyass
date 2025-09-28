@@ -12,7 +12,6 @@ body {
     background-color: #FCF9F6;
     color: #504646;
     font-family: var(--font-inter), sans-serif;
-    padding-top: 5rem;
 }
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-playfair-display), serif;
@@ -1149,4 +1148,27 @@ h1, h2, h3, h4, h5, h6 {
 
 .page-content-animate {
   animation: page-turn 0.6s ease-in-out forwards;
+}
+/* --- Custom Green Scrollbar Styles --- */
+/* This styles the overall scrollbar, setting its width */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* This styles the "track" or the background of the scrollbar */
+::-webkit-scrollbar-track {
+  background: #FCF9F6; /* Matches your site's cream background */
+  border-left: 1px solid #e5e7eb; /* A subtle light gray border */
+}
+ 
+/* This styles the draggable "thumb" of the scrollbar */
+::-webkit-scrollbar-thumb {
+  background-color: #173F25; /* Your website's main green color */
+  border-radius: 10px;
+  border: 3px solid #FCF9F6; /* Creates a nice padding effect */
+}
+
+/* This adds a hover effect to the thumb */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #2a5d3f; /* A slightly lighter green for interaction */
 }

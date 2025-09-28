@@ -5,15 +5,15 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useAuth } from '@/context/AuthContext'; // Step 1: Import the useAuth hook
-import { auth } from '@/lib/firebase'; // Import auth for signout
+import { useAuth } from '@/context/AuthContext';
+import { auth } from '@/lib/firebase';
 import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 
-export default function Navbar() {
+export default function Navbar({ className }: { className?: string }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { user } = useAuth(); // Step 2: Get user from the context
+  const { user } = useAuth();
   const router = useRouter();
 
   // Handle user logout
@@ -80,7 +80,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="bg-classic-green text-white h-20 flex items-center px-6 md:px-12 fixed top-0 left-0 w-full z-50">
+      <nav className={`bg-classic-green text-white h-20 flex items-center px-6 md:px-12 w-full z-50 ${className || ''}`}>
         <div className="container mx-auto flex justify-between items-center relative h-full">
           
           <div className="hidden lg:flex justify-start items-center space-x-8">
@@ -111,7 +111,6 @@ export default function Navbar() {
                     <span>Feedback</span>
                     <Image src="/image/likeanddislike.png" alt="Feedback Icon" width={56} height={56} className="ml-[-0.5em]" />
                  </Link>
-                 {/* Step 3: Render the new AuthLinks component */}
                  <AuthLinks />
             </div>
            
@@ -137,7 +136,6 @@ export default function Navbar() {
           <Link href="/prompt" onClick={closeMenu} className="mobile-nav-link">MaBook AI</Link>
           <Link href="/bookshelf" onClick={closeMenu} className="mobile-nav-link">Bookshelf</Link>
           <Link href="/why-us" onClick={closeMenu} className="mobile-nav-link">Why Us?</Link>
-          {/* Step 4: Update mobile menu */}
           {user ? (
             <button onClick={() => { handleLogout(); closeMenu(); }} className="mobile-nav-link text-left">Logout</button>
           ) : (

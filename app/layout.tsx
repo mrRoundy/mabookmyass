@@ -2,10 +2,8 @@
 
 import type { Metadata } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
-import Navbar from '@/components/Navbar';
-import ConditionalFooter from '@/components/ConditionalFooter';
 import { AuthProvider } from '@/context/AuthContext';
-import VerificationBanner from '@/components/VerificationBanner';
+import PageWrapper from '@/components/PageWrapper'; // Import the new wrapper
 import './globals.css';
 
 const inter = Inter({ 
@@ -47,10 +45,7 @@ export default function RootLayout({
             <p>This experience is best viewed in portrait mode.</p>
           </div>
           
-          <VerificationBanner />
-          <Navbar />
-          <main className="flex-grow overflow-hidden">{children}</main>
-          <ConditionalFooter />
+          <PageWrapper>{children}</PageWrapper>
 
         </AuthProvider>
       </body>

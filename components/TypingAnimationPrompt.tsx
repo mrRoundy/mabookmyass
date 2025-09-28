@@ -24,7 +24,7 @@ export default function TypingAnimationPrompt() {
     }, []); // The empty array ensures this runs only once on mount
 
     return (
-        <div className="font-sans text-[20px] md:text-[22px] leading-relaxed mb-4 min-h-[80px] md:min-h-[60px] flex items-center justify-center whitespace-nowrap">
+        <div className="font-sans text-[20px] md:text-[22px] leading-relaxed mb-4 min-h-[80px] md:min-h-[60px] flex items-center justify-center text-center md:whitespace-nowrap">
             {currentQuote && (
                 <TypeAnimation
                     cursor={false}
@@ -35,7 +35,7 @@ export default function TypingAnimationPrompt() {
                     ]}
                     wrapper="p"
                     speed={55}
-                    className="solid-cursor md:whitespace-nowrap" // CHANGED: Added responsive prefix
+                    className="solid-cursor"
                     repeat={0}
                 />
             )}
