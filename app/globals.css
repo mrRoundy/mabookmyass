@@ -446,7 +446,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, opacity 0.2s ease-in-out;
     box-shadow: 0 1px 3px rgba(31,41,55,0.2);
     z-index: 10;
     flex-shrink: 0;
@@ -1171,4 +1171,27 @@ h1, h2, h3, h4, h5, h6 {
 /* This adds a hover effect to the thumb */
 ::-webkit-scrollbar-thumb:hover {
   background-color: #2a5d3f; /* A slightly lighter green for interaction */
+}
+/* --- High-Precision Underline Effect --- */
+.highlight-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #173F25;
+  transform: scaleX(0);
+  transform-origin: var(--mouse-x, center);
+  transition: transform 0.3s ease-out;
+}
+
+/* Animate the underline when the parent .highlight-group is hovered */
+.highlight-group:hover .highlight-underline::after {
+  transform: scaleX(1);
+}
+
+/* --- Custom Font Class --- */
+.font-lustria {
+    font-family: var(--font-lustria), serif;
 }

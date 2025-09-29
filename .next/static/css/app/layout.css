@@ -336,6 +336,22 @@
 }.__variable_3cb7a3 {--font-playfair-display: '__Playfair_Display_3cb7a3', '__Playfair_Display_Fallback_3cb7a3'
 }
 
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[2].use[1]!./node_modules/next/dist/build/webpack/loaders/next-font-loader/index.js??ruleSet[1].rules[14].oneOf[2].use[2]!./node_modules/next/font/google/target.css?{"path":"app\\layout.tsx","import":"Lustria","arguments":[{"subsets":["latin"],"weight":["400"],"style":"normal","variable":"--font-lustria"}],"variableName":"lustria"} ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/* latin */
+@font-face {
+  font-family: '__Lustria_fc77c6';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/_next/static/media/380272bedc9e9744-s.p.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}@font-face {font-family: '__Lustria_Fallback_fc77c6';src: local("Times New Roman");ascent-override: 82.90%;descent-override: 28.39%;line-gap-override: 0.00%;size-adjust: 115.20%
+}.__className_fc77c6 {font-family: '__Lustria_fc77c6', '__Lustria_Fallback_fc77c6';font-weight: 400;font-style: normal
+}.__variable_fc77c6 {--font-lustria: '__Lustria_fc77c6', '__Lustria_Fallback_fc77c6'
+}
+
 /*!*************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[12].use[3]!./app/globals.css ***!
   \*************************************************************************************************************************************************************************************************************************************************************/
@@ -876,9 +892,6 @@ video {
 .pointer-events-none {
   pointer-events: none;
 }
-.pointer-events-auto {
-  pointer-events: auto;
-}
 .visible {
   visibility: visible;
 }
@@ -906,6 +919,9 @@ video {
 .bottom-2 {
   bottom: 0.5rem;
 }
+.bottom-\[-2px\] {
+  bottom: -2px;
+}
 .left-0 {
   left: 0px;
 }
@@ -923,6 +939,9 @@ video {
 }
 .right-2 {
   right: 0.5rem;
+}
+.right-\[45\.78rem\] {
+  right: 45.78rem;
 }
 .top-0 {
   top: 0px;
@@ -1075,6 +1094,9 @@ video {
 .h-\[280px\] {
   height: 280px;
 }
+.h-\[2px\] {
+  height: 2px;
+}
 .h-\[480px\] {
   height: 480px;
 }
@@ -1192,6 +1214,9 @@ video {
 .flex-grow {
   flex-grow: 1;
 }
+.origin-center {
+  transform-origin: center;
+}
 .-translate-x-1\/2 {
   --tw-translate-x: -50%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -1222,6 +1247,10 @@ video {
 }
 .translate-y-2 {
   --tw-translate-y: 0.5rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.scale-x-0 {
+  --tw-scale-x: 0;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 .transform {
@@ -1294,11 +1323,6 @@ video {
   --tw-space-x-reverse: 0;
   margin-right: calc(2rem * var(--tw-space-x-reverse));
   margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
-}
-.space-x-\[38rem\] > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-x-reverse: 0;
-  margin-right: calc(38rem * var(--tw-space-x-reverse));
-  margin-left: calc(38rem * calc(1 - var(--tw-space-x-reverse)));
 }
 .space-y-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
@@ -1739,6 +1763,9 @@ video {
 }
 .opacity-100 {
   opacity: 1;
+}
+.opacity-30 {
+  opacity: 0.3;
 }
 .shadow {
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
@@ -2264,7 +2291,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, opacity 0.2s ease-in-out;
     box-shadow: 0 1px 3px rgba(31,41,55,0.2);
     z-index: 10;
     flex-shrink: 0;
@@ -2997,6 +3024,29 @@ h1, h2, h3, h4, h5, h6 {
 ::-webkit-scrollbar-thumb:hover {
   background-color: #2a5d3f; /* A slightly lighter green for interaction */
 }
+/* --- High-Precision Underline Effect --- */
+.highlight-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #173F25;
+  transform: scaleX(0);
+  transform-origin: var(--mouse-x, center);
+  transition: transform 0.3s ease-out;
+}
+
+/* Animate the underline when the parent .highlight-group is hovered */
+.highlight-group:hover .highlight-underline::after {
+  transform: scaleX(1);
+}
+
+/* --- Custom Font Class --- */
+.font-lustria {
+    font-family: var(--font-lustria), serif;
+}
 .hover\:scale-105:hover {
   --tw-scale-x: 1.05;
   --tw-scale-y: 1.05;
@@ -3068,6 +3118,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 .disabled\:opacity-30:disabled {
   opacity: 0.3;
+}
+.group:hover .group-hover\:scale-x-100 {
+  --tw-scale-x: 1;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 @media (min-width: 640px) {
 

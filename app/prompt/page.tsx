@@ -498,12 +498,18 @@ function PromptComponent() {
                                     x: { type: "spring", stiffness: 300, damping: 30 },
                                     opacity: { duration: 0.2 }
                                 }}
-                                className="absolute w-full h-full p-6 bg-white rounded-lg shadow-md flex flex-col justify-center text-center font-serif"
+                                className="absolute w-full h-full p-6 bg-white rounded-lg shadow-md flex flex-col items-center justify-center text-center"
                             >
                                 <div className="absolute top-2 left-2 text-6xl text-classic-green font-serif">“</div>
-                                <p className="text-lg leading-relaxed text-gray-800 mb-4 px-4">"{recommendations[mobileIndex].highlight}"</p>
+                                <Link
+                                  href={`/book-details/${recommendations[mobileIndex].id}`}
+                                  className="group font-lustria relative text-lg leading-relaxed text-gray-800 px-4 py-2 cursor-pointer"
+                                  aria-label="View book details for this quote"
+                                >
+                                  "{recommendations[mobileIndex].highlight}"
+                                  <span className="absolute bottom-[-2px] left-0 w-full h-[2px] bg-[#173F25] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out origin-center"></span>
+                                </Link>
                                 <div className="absolute bottom-2 right-2 text-6xl text-classic-green font-serif">”</div>
-
                             </motion.div>
                         </AnimatePresence>
                     </div>

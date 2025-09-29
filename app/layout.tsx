@@ -1,7 +1,7 @@
 // app/layout.tsx
 
 import type { Metadata } from 'next';
-import { Inter, Playfair_Display } from 'next/font/google';
+import { Inter, Playfair_Display, Lustria } from 'next/font/google';
 import { AuthProvider } from '@/context/AuthContext';
 import PageWrapper from '@/components/PageWrapper'; // Import the new wrapper
 import './globals.css';
@@ -19,6 +19,13 @@ const playfairDisplay = Playfair_Display({
   variable: '--font-playfair-display',
 });
 
+const lustria = Lustria({
+  subsets: ['latin'],
+  weight: ['400'],
+  style: 'normal',
+  variable: '--font-lustria',
+});
+
 export const metadata: Metadata = {
   title: 'MaBook - Book Recommendations',
   description: 'AI-Powered Book Discovery That Solves Your Problems',
@@ -34,7 +41,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth h-full">
-      <body className={`${inter.variable} ${playfairDisplay.variable} font-sans bg-classic-cream flex flex-col min-h-full`}>
+      <body className={`${inter.variable} ${playfairDisplay.variable} ${lustria.variable} font-sans bg-classic-cream flex flex-col min-h-full`}>
         <AuthProvider>
             
           <div className="orientation-lock-overlay">
