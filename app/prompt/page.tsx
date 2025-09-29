@@ -1,5 +1,7 @@
+// app/prompt/page.tsx
 'use client';
 
+// ... (imports remain the same) ...
 import { useState, useEffect, Suspense, FormEvent, ChangeEvent, KeyboardEvent, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import TypingAnimationPrompt from '@/components/TypingAnimationPrompt';
@@ -7,7 +9,8 @@ import RecommendationBook from '@/components/RecommendationBook';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 
-// --- TYPE DEFINITIONS ---
+
+// ... (type definitions and helper functions remain the same) ...
 interface Recommendation {
   id: string;
   title: string;
@@ -35,7 +38,6 @@ const placeholderTexts = [
     "What's on your mind?"
 ];
 
-// --- HELPER FUNCTIONS ---
 const AVAILABLE_GENRES = [
     "Habits", "Finance", "Leadership", "Mental health", "Motivational",
     "Physical Health", "Time Management", "Communication", "Self-Discovery",
@@ -44,7 +46,6 @@ const AVAILABLE_GENRES = [
 ];
 
 const generateAIPrompt = (taskType: string, userPrompt?: string | null, availableGenres?: string | null, data?: any, totalCount?: number): string => {
-    // This function's content remains unchanged
     const prompts: { [key: string]: any } = {
         languageDetection: {
             role: "You are a highly accurate language identification AI.",
@@ -146,23 +147,24 @@ const parseHighlights = (highlightsText: string): string[] => {
     return singleHighlight ? [singleHighlight] : [];
 };
 
+
 function PromptComponent() {
-  const searchParams = useSearchParams();
-  const [query, setQuery] = useState('');
-  const [searchType, setSearchType] = useState('highlights');
-  const [isLoading, setIsLoading] = useState(false);
-  const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const formRef = useRef<HTMLFormElement>(null);
-  const [placeholder, setPlaceholder] = useState('');
+  // ... (all state and useEffect hooks remain the same) ...
+    const searchParams = useSearchParams();
+    const [query, setQuery] = useState('');
+    const [searchType, setSearchType] = useState('highlights');
+    const [isLoading, setIsLoading] = useState(false);
+    const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
+    const [error, setError] = useState<string | null>(null);
+    const formRef = useRef<HTMLFormElement>(null);
+    const [placeholder, setPlaceholder] = useState('');
+    
+    const [mobileIndex, setMobileIndex] = useState(0);
+    const [mobileDirection, setMobileDirection] = useState(0);
+    const [bookCurrentIndex, setBookCurrentIndex] = useState(1);
+    const [isBookFlipping, setIsBookFlipping] = useState(false);
   
-  const [mobileIndex, setMobileIndex] = useState(0);
-  const [mobileDirection, setMobileDirection] = useState(0);
-  const [bookCurrentIndex, setBookCurrentIndex] = useState(1);
-  const [isBookFlipping, setIsBookFlipping] = useState(false);
-
-
-  const handleSearch = async (currentQuery = query, currentSearchType = searchType) => {
+    const handleSearch = async (currentQuery = query, currentSearchType = searchType) => {
     if (!currentQuery.trim()) {
       setError('Please enter a prompt to get recommendations.');
       return;
@@ -410,124 +412,125 @@ function PromptComponent() {
     };
   }, [recommendations, bookCurrentIndex, mobileIndex, isBookFlipping]);
 
-
   return (
     <main className="flex-grow flex flex-col items-center justify-center bg-classic-cream px-4 sm:px-6 lg:px-8 min-h-[calc(100vh-5rem)]">
-      <div className="w-full max-w-7xl mx-auto">
-        <div className="text-center text-classic-green mb-10 max-w-2xl mx-auto">
-          <TypingAnimationPrompt />
-          <h2 className="font-serif text-3xl md:text-6xl font-bold uppercase tracking-wide whitespace-nowrap">
-              Begin by Asking...
-          </h2>
-        </div>
-        
-        <form onSubmit={handleSubmit} ref={formRef} className="mb-8 max-w-4xl mx-auto">
-            <div className="search-box-container">
-                <textarea
-                    className="search-input w-full flex-grow bg-transparent text-classic-green placeholder-neutral-500 text-base leading-relaxed focus:outline-none resize-none overflow-y-auto"
-                    value={query}
-                    onChange={handleTextareaChange}
-                    onKeyDown={handleKeyDown}
-                    placeholder={placeholder}
-                    rows={1}
-                />
-                <div className="search-options-row">
-                    <div className="flex items-center space-x-2">
-                        <button type="button" onClick={() => setSearchType('highlights')} className={`search-option-btn ${searchType === 'highlights' ? 'active' : ''}`}>
-                            <span className="hidden sm:inline">By </span>Highlights
-                        </button>
-                        <button type="button" onClick={() => setSearchType('synopsis')} className={`search-option-btn ${searchType === 'synopsis' ? 'active' : ''}`}>
-                            <span className="hidden sm:inline">By </span>Synopsis
-                        </button>
-                    </div>
-                    <button type="submit" disabled={isLoading || !query.trim()} className="send-btn flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300">
-                        <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5"><path d="M8 5v14l11-7z"/></svg>
-                    </button>
-                </div>
+        <div className="w-full max-w-7xl mx-auto">
+            {/* ... (header and search form remain the same) ... */}
+            <div className="text-center text-classic-green mb-10 max-w-2xl mx-auto">
+                <TypingAnimationPrompt />
+                <h2 className="font-serif text-3xl md:text-6xl font-bold uppercase tracking-wide whitespace-nowrap">
+                    Begin by Asking...
+                </h2>
             </div>
-        </form>
 
-        {isLoading && (
-            <div className="text-center text-classic-green text-lg my-5">
-              <div className="book-container">
-                  <div className="book">
-                      <div className="book__page"></div>
-                      <div className="book__page"></div>
-                      <div className="book__page"></div>
-                  </div>
-              </div>
-              <p>AI is analyzing your request and finding the best book recommendations...</p>
-          </div>
-        )}
-
-        {error && (
-            <div className="bg-classic-green bg-opacity-10 border border-classic-green text-classic-green p-4 rounded-lg my-5 text-center">
-            {error}
-          </div>
-        )}
-
-        {!isLoading && recommendations.length > 0 && (
-          <div className="w-full my-16">
-            <div className="hidden md:block">
-              <div className="w-screen relative left-1/2 -translate-x-1/2">
-                <div className="w-[120vw] max-w-none transform translate-x-[11.25%]">
-                    <RecommendationBook 
-                        recommendations={recommendations}
-                        currentIndex={bookCurrentIndex}
-                        isFlipping={isBookFlipping}
-                        onNext={handleNext}
-                        onPrev={handlePrev}
-                        setIsFlipping={setIsBookFlipping}
+            <form onSubmit={handleSubmit} ref={formRef} className="mb-8 max-w-4xl mx-auto">
+                <div className="search-box-container">
+                    <textarea
+                        className="search-input w-full flex-grow bg-transparent text-classic-green placeholder-neutral-500 text-base leading-relaxed focus:outline-none resize-none overflow-y-auto"
+                        value={query}
+                        onChange={handleTextareaChange}
+                        onKeyDown={handleKeyDown}
+                        placeholder={placeholder}
+                        rows={1}
                     />
-                </div>
-              </div>
-            </div>
-
-            <div className="block md:hidden">
-                <div className="w-full flex flex-col items-center">
-                    <div className="relative w-full max-w-sm h-[480px] overflow-hidden">
-                        <AnimatePresence initial={false} custom={mobileDirection} mode="wait">
-                            <motion.div
-                                key={mobileIndex}
-                                custom={mobileDirection}
-                                variants={sheetVariants}
-                                initial="enter"
-                                animate="center"
-                                exit="exit"
-                                transition={{
-                                    x: { type: "spring", stiffness: 300, damping: 30 },
-                                    opacity: { duration: 0.2 }
-                                }}
-                                className="absolute w-full h-full p-6 bg-white rounded-lg shadow-md flex flex-col items-center justify-center text-center"
-                            >
-                                <div className="absolute top-2 left-2 text-6xl text-classic-green font-serif">“</div>
-                                <Link
-                                  href={`/book-details/${recommendations[mobileIndex].id}`}
-                                  className="group font-lustria relative text-lg leading-relaxed text-gray-800 px-4 py-2 cursor-pointer"
-                                  aria-label="View book details for this quote"
-                                >
-                                  "{recommendations[mobileIndex].highlight}"
-                                  <span className="absolute bottom-[-2px] left-0 w-full h-[2px] bg-[#173F25] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out origin-center"></span>
-                                </Link>
-                                <div className="absolute bottom-2 right-2 text-6xl text-classic-green font-serif">”</div>
-                            </motion.div>
-                        </AnimatePresence>
-                    </div>
-
-                    <div className="flex items-center justify-center space-x-8 mt-4">
-                        <button onClick={handlePrev} disabled={mobileIndex === 0} className="font-sans font-semibold text-classic-green disabled:text-gray-400">
-                            Previous
-                        </button>
-                        <span className="font-sans text-sm text-gray-500">{mobileIndex + 1} / {recommendations.length}</span>
-                        <button onClick={handleNext} disabled={mobileIndex === recommendations.length - 1} className="font-sans font-semibold text-classic-green disabled:text-gray-400">
-                            Next
+                    <div className="search-options-row">
+                        <div className="flex items-center space-x-2">
+                            <button type="button" onClick={() => setSearchType('highlights')} className={`search-option-btn ${searchType === 'highlights' ? 'active' : ''}`}>
+                                <span className="hidden sm:inline">By </span>Highlights
+                            </button>
+                            <button type="button" onClick={() => setSearchType('synopsis')} className={`search-option-btn ${searchType === 'synopsis' ? 'active' : ''}`}>
+                                <span className="hidden sm:inline">By </span>Synopsis
+                            </button>
+                        </div>
+                        <button type="submit" disabled={isLoading || !query.trim()} className="send-btn flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300">
+                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5"><path d="M8 5v14l11-7z"/></svg>
                         </button>
                     </div>
                 </div>
-            </div>
-          </div>
-        )}
-      </div>
+            </form>
+
+            {isLoading && (
+                <div className="text-center text-classic-green text-lg my-5">
+                    <div className="book-container">
+                        <div className="book">
+                            <div className="book__page"></div>
+                            <div className="book__page"></div>
+                            <div className="book__page"></div>
+                        </div>
+                    </div>
+                    <p>AI is analyzing your request and finding the best book recommendations...</p>
+                </div>
+            )}
+
+            {error && (
+                <div className="bg-classic-green bg-opacity-10 border border-classic-green text-classic-green p-4 rounded-lg my-5 text-center">
+                    {error}
+                </div>
+            )}
+
+            {!isLoading && recommendations.length > 0 && (
+                <div className="w-full my-16">
+                    <div className="hidden md:block">
+                        <div className="w-screen relative left-1/2 -translate-x-1/2">
+                            <div className="w-[120vw] max-w-none transform translate-x-[11.25%]">
+                                <RecommendationBook 
+                                    recommendations={recommendations}
+                                    currentIndex={bookCurrentIndex}
+                                    isFlipping={isBookFlipping}
+                                    onNext={handleNext}
+                                    onPrev={handlePrev}
+                                    setIsFlipping={setIsBookFlipping}
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="block md:hidden">
+                        <div className="w-full flex flex-col items-center">
+                            <div className="relative w-full max-w-sm h-[480px] overflow-hidden">
+                                <AnimatePresence initial={false} custom={mobileDirection} mode="wait">
+                                    <motion.div
+                                        key={mobileIndex}
+                                        custom={mobileDirection}
+                                        variants={sheetVariants}
+                                        initial="enter"
+                                        animate="center"
+                                        exit="exit"
+                                        transition={{
+                                            x: { type: "spring", stiffness: 300, damping: 30 },
+                                            opacity: { duration: 0.2 }
+                                        }}
+                                        className="absolute w-full h-full p-6 bg-white rounded-lg shadow-md flex flex-col items-center justify-center text-center"
+                                    >
+                                        <div className="absolute top-2 left-2 text-6xl text-classic-green font-serif">“</div>
+                                        {/* --- MODIFICATION START --- */}
+                                        <Link
+                                            href={`/book-details/${recommendations[mobileIndex].id}`}
+                                            className="font-lustria text-lg leading-relaxed text-gray-800 px-4 py-2 cursor-pointer transition-transform duration-300 ease-out hover:scale-105"
+                                            aria-label="View book details for this quote"
+                                        >
+                                            "{recommendations[mobileIndex].highlight}"
+                                        </Link>
+                                        {/* --- MODIFICATION END --- */}
+                                        <div className="absolute bottom-2 right-2 text-6xl text-classic-green font-serif">”</div>
+                                    </motion.div>
+                                </AnimatePresence>
+                            </div>
+
+                            <div className="flex items-center justify-center space-x-8 mt-4">
+                                <button onClick={handlePrev} disabled={mobileIndex === 0} className="font-sans font-semibold text-classic-green disabled:text-gray-400">
+                                    Previous
+                                </button>
+                                <span className="font-sans text-sm text-gray-500">{mobileIndex + 1} / {recommendations.length}</span>
+                                <button onClick={handleNext} disabled={mobileIndex === recommendations.length - 1} className="font-sans font-semibold text-classic-green disabled:text-gray-400">
+                                    Next
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
     </main>
   );
 }
