@@ -4,7 +4,6 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
-// ... (interface definitions remain the same) ...
 interface Recommendation {
   id: string;
   title: string;
@@ -21,9 +20,7 @@ interface RecommendationBookProps {
     setIsFlipping: (isFlipping: boolean) => void;
 }
 
-
 export default function RecommendationBook({ recommendations, currentIndex, isFlipping, onNext, onPrev, setIsFlipping }: RecommendationBookProps) {
-    // ... (logic for button classes remains the same) ...
     const isFirstPage = currentIndex === 1;
     const isLastPage = currentIndex === recommendations.length;
 
@@ -43,19 +40,23 @@ export default function RecommendationBook({ recommendations, currentIndex, isFl
         <div className="w-full flex flex-col items-center">
             <div className="w-full max-w-[1440px] aspect-[12/7] relative">
                 
-                {/* --- Hardcover Base --- */}
-                <div className="absolute w-full h-full bg-[#173F25] rounded-lg shadow-2xl p-2 md:p-3">
+                {/* --- MODIFICATION START --- */}
+                {/* Added 'relative' class and the new back-cover-gradient-overlay */}
+                <div className="absolute w-full h-full bg-[#173F25] rounded-lg shadow-2xl p-2 md:p-3 relative">
+                    <div className="back-cover-gradient-overlay"></div>
+                    {/* --- MODIFICATION END --- */}
+
                     <div className="relative w-full h-full" style={{ transformStyle: 'preserve-3d', perspective: '3000px' }}>
                         
-                        {/* ... (static pages and gradient overlay remain the same) ... */}
                         <div className="absolute w-full h-full bg-white rounded-md shadow-lg border border-gray-200 transform translate-y-2 translate-x-1"></div>
                         <div className="absolute w-full h-full bg-white rounded-md shadow-lg border border-gray-200 transform translate-y-1"></div>
+                        
                         <div className="absolute w-full h-full bg-white rounded-md shadow-xl flex z-0 border border-gray-300">
                             <div className="w-1/2 h-full bg-gray-50 rounded-l-md"></div>
                             <div className="w-1/2 h-full bg-gray-50 rounded-r-md"></div>
                         </div>
                         
-                        <div className="page-gradient-overlay"></div>
+                        <div className="page-gradient-overlay z-10"></div>
 
                         <div className="absolute w-24 h-full left-1/2 -translate-x-1/2 flex z-20 pointer-events-none">
                             <div className="w-full h-full bg-gradient-to-r from-transparent via-black/10 to-transparent"></div>
@@ -83,18 +84,19 @@ export default function RecommendationBook({ recommendations, currentIndex, isFl
                                     <div className="absolute w-full h-full bg-gradient-to-r from-black/10 via-transparent to-transparent pointer-events-none"></div>
                                 </div>
                                 <div className="absolute w-full h-full bg-white rounded-l-md flex flex-col items-center justify-center text-center p-6 md:p-10" style={{ transform: 'rotateY(180deg)', backfaceVisibility: 'hidden' }}>
+                                    
+                                    <div className="flipped-page-gradient-overlay"></div>
+
                                     <div className="absolute w-full h-full bg-gradient-to-l from-black/10 via-transparent to-transparent pointer-events-none"></div>
                                     <div className="relative z-10">
                                         <div className="absolute -top-16 -left-8 text-8xl text-classic-green font-serif">“</div>
-                                        {/* --- MODIFICATION START --- */}
                                         <Link 
                                             href={`/book-details/${rec.id}`}
-                                            className="font-lustria inline-block text-lg md:text-2xl leading-relaxed text-gray-800 px-8 py-4 cursor-pointer transition-transform duration-300 ease-out hover:scale-105"
+                                            className="font-lustria inline-block text-lg md:text-2xl leading-relaxed text-gray-800 px-8 py.4 cursor-pointer transition-transform duration-300 ease-out hover:scale-105"
                                             aria-label="View book details for this quote"
                                         >
                                             {rec.highlight}
                                         </Link>
-                                        {/* --- MODIFICATION END --- */}
                                         <div className="absolute -bottom-25 -right-8 text-8xl text-classic-green font-serif">”</div>
                                     </div>
                                 </div>
@@ -103,7 +105,7 @@ export default function RecommendationBook({ recommendations, currentIndex, isFl
                     </div>
                 </div>
                 
-                {/* ... (navigation buttons remain the same) ... */}
+                {/* Navigation Buttons */}
                 <button
                     onClick={onPrev}
                     disabled={isFirstPage || isFlipping}

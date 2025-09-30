@@ -1,6 +1,3 @@
 {
-  "/book-details/[id]/page": "app/book-details/[id]/page.js",
-  "/why-us/page": "app/why-us/page.js",
-  "/page": "app/page.js",
-  "/prompt/page": "app/prompt/page.js"
+  "/page": "app/page.js"
 }
