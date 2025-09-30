@@ -1,7 +1,6 @@
 // app/prompt/page.tsx
 'use client';
 
-// ... (imports remain the same) ...
 import { useState, useEffect, Suspense, FormEvent, ChangeEvent, KeyboardEvent, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import TypingAnimationPrompt from '@/components/TypingAnimationPrompt';
@@ -9,8 +8,6 @@ import RecommendationBook from '@/components/RecommendationBook';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 
-
-// ... (type definitions and helper functions remain the same) ...
 interface Recommendation {
   id: string;
   title: string;
@@ -149,7 +146,6 @@ const parseHighlights = (highlightsText: string): string[] => {
 
 
 function PromptComponent() {
-  // ... (all state and useEffect hooks remain the same) ...
     const searchParams = useSearchParams();
     const [query, setQuery] = useState('');
     const [searchType, setSearchType] = useState('highlights');
@@ -163,6 +159,7 @@ function PromptComponent() {
     const [mobileDirection, setMobileDirection] = useState(0);
     const [bookCurrentIndex, setBookCurrentIndex] = useState(1);
     const [isBookFlipping, setIsBookFlipping] = useState(false);
+    const bookRef = useRef<HTMLDivElement>(null);
   
     const handleSearch = async (currentQuery = query, currentSearchType = searchType) => {
     if (!currentQuery.trim()) {
@@ -412,10 +409,18 @@ function PromptComponent() {
     };
   }, [recommendations, bookCurrentIndex, mobileIndex, isBookFlipping]);
 
+  useEffect(() => {
+    if (recommendations.length > 0 && bookRef.current) {
+      bookRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }
+  }, [recommendations]);
+
   return (
     <main className="flex-grow flex flex-col items-center justify-center bg-classic-cream px-4 sm:px-6 lg:px-8 min-h-[calc(100vh-5rem)]">
         <div className="w-full max-w-7xl mx-auto">
-            {/* ... (header and search form remain the same) ... */}
             <div className="text-center text-classic-green mb-10 max-w-2xl mx-auto">
                 <TypingAnimationPrompt />
                 <h2 className="font-serif text-3xl md:text-6xl font-bold uppercase tracking-wide whitespace-nowrap">
@@ -469,7 +474,7 @@ function PromptComponent() {
             )}
 
             {!isLoading && recommendations.length > 0 && (
-                <div className="w-full my-16">
+                <div ref={bookRef} className="w-full my-16">
                     <div className="hidden md:block">
                         <div className="w-screen relative left-1/2 -translate-x-1/2">
                             <div className="w-[120vw] max-w-none transform translate-x-[11.25%]">
@@ -503,7 +508,6 @@ function PromptComponent() {
                                         className="absolute w-full h-full p-6 bg-white rounded-lg shadow-md flex flex-col items-center justify-center text-center"
                                     >
                                         <div className="absolute top-2 left-2 text-6xl text-classic-green font-serif">“</div>
-                                        {/* --- MODIFICATION START --- */}
                                         <Link
                                             href={`/book-details/${recommendations[mobileIndex].id}`}
                                             className="font-lustria text-lg leading-relaxed text-gray-800 px-4 py-2 cursor-pointer transition-transform duration-300 ease-out hover:scale-105"
@@ -511,7 +515,6 @@ function PromptComponent() {
                                         >
                                             "{recommendations[mobileIndex].highlight}"
                                         </Link>
-                                        {/* --- MODIFICATION END --- */}
                                         <div className="absolute bottom-2 right-2 text-6xl text-classic-green font-serif">”</div>
                                     </motion.div>
                                 </AnimatePresence>

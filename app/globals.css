@@ -142,8 +142,6 @@ h1, h2, h3, h4, h5, h6 {
     overflow: hidden;
     padding-top: 1.5rem;    /* This creates space for the book to scale up */
     padding-bottom: 1.5rem; /* This creates space for the book to scale down */
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
-    mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
 }
 .book-carousel {
     display: flex;
@@ -456,8 +454,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 .bookshelf-container {
     overflow: hidden;
-    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
 .bookshelf {
     display: flex;
@@ -1221,7 +1217,7 @@ h1, h2, h3, h4, h5, h6 {
         linear-gradient(to left, rgba(23, 63, 37, 0.4) 0%, rgba(23, 63, 37, 0) 80%) bottom / 100% 2px no-repeat,
         linear-gradient(to left, hsl(0 0% 100% / 0.95) 5%, hsl(0 0% 100% / 0) 70%); /* Reversed direction */
 }
-.bg-\[\#173F25\]::before {
+.book-cover-hardcover::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -1229,6 +1225,6 @@ h1, h2, h3, h4, h5, h6 {
     pointer-events: none;
     z-index: 0;
     
-    /* A strong gradient that fades from transparent to white, mimicking the image */
+    /* This gradient will now ONLY apply to the book cover */
     background: linear-gradient(to right, rgba(252, 249, 246, 0) 50%, rgba(252, 249, 246, 0.99) 79%);
 }

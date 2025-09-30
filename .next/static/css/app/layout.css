@@ -904,6 +904,9 @@ video {
 .relative {
   position: relative;
 }
+.sticky {
+  position: sticky;
+}
 .inset-0 {
   inset: 0px;
 }
@@ -918,9 +921,6 @@ video {
 }
 .bottom-2 {
   bottom: 0.5rem;
-}
-.left-0 {
-  left: 0px;
 }
 .left-1\/2 {
   left: 50%;
@@ -940,9 +940,6 @@ video {
 .right-\[45\.78rem\] {
   right: 45.78rem;
 }
-.top-0 {
-  top: 0px;
-}
 .top-1\/2 {
   top: 50%;
 }
@@ -951,6 +948,54 @@ video {
 }
 .top-28 {
   top: 7rem;
+}
+.bottom-12 {
+  bottom: 3rem;
+}
+.left-12 {
+  left: 3rem;
+}
+.right-12 {
+  right: 3rem;
+}
+.top-12 {
+  top: 3rem;
+}
+.bottom-14 {
+  bottom: 3.5rem;
+}
+.bottom-\[12rem\] {
+  bottom: 12rem;
+}
+.bottom-\[100rem\] {
+  bottom: 100rem;
+}
+.bottom-\[20rem\] {
+  bottom: 20rem;
+}
+.bottom-\[1rem\] {
+  bottom: 1rem;
+}
+.bottom-\[0\.5rem\] {
+  bottom: 0.5rem;
+}
+.bottom-\[0\.1rem\] {
+  bottom: 0.1rem;
+}
+.bottom-\[-1rem\] {
+  bottom: -1rem;
+}
+.bottom-\[-\.5rem\] {
+  bottom: -.5rem;
+}
+.bottom-\[-0\.5rem\] {
+  bottom: -0.5rem;
+}
+.bottom-\[-0\.2rem\] {
+  bottom: -0.2rem;
+}
+.top-0 {
+  top: 0px;
 }
 .z-0 {
   z-index: 0;
@@ -966,6 +1011,9 @@ video {
 }
 .z-50 {
   z-index: 50;
+}
+.z-\[6\] {
+  z-index: 6;
 }
 .mx-\[10px\] {
   margin-left: 10px;
@@ -1553,6 +1601,10 @@ video {
   padding-top: 2rem;
   padding-bottom: 2rem;
 }
+.px-12 {
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
 .pb-2 {
   padding-bottom: 0.5rem;
 }
@@ -1561,9 +1613,6 @@ video {
 }
 .pl-4 {
   padding-left: 1rem;
-}
-.pt-20 {
-  padding-top: 5rem;
 }
 .text-left {
   text-align: left;
@@ -1753,6 +1802,9 @@ video {
 }
 .opacity-30 {
   opacity: 0.3;
+}
+.opacity-80 {
+  opacity: 0.8;
 }
 .shadow {
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
@@ -1969,8 +2021,6 @@ h1, h2, h3, h4, h5, h6 {
     overflow: hidden;
     padding-top: 1.5rem;    /* This creates space for the book to scale up */
     padding-bottom: 1.5rem; /* This creates space for the book to scale down */
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
-    mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
 }
 .book-carousel {
     display: flex;
@@ -2285,8 +2335,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 .bookshelf-container {
     overflow: hidden;
-    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
 .bookshelf {
     display: flex;
@@ -3057,7 +3105,7 @@ h1, h2, h3, h4, h5, h6 {
         linear-gradient(to left, rgba(23, 63, 37, 0.4) 0%, rgba(23, 63, 37, 0) 80%) bottom / 100% 2px no-repeat,
         linear-gradient(to left, hsl(0 0% 100% / 0.95) 5%, hsl(0 0% 100% / 0) 70%); /* Reversed direction */
 }
-.bg-\[\#173F25\]::before {
+.book-cover-hardcover::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -3065,7 +3113,7 @@ h1, h2, h3, h4, h5, h6 {
     pointer-events: none;
     z-index: 0;
     
-    /* A strong gradient that fades from transparent to white, mimicking the image */
+    /* This gradient will now ONLY apply to the book cover */
     background: linear-gradient(to right, rgba(252, 249, 246, 0) 50%, rgba(252, 249, 246, 0.99) 79%);
 }
 .hover\:scale-105:hover {
@@ -3154,6 +3202,14 @@ h1, h2, h3, h4, h5, h6 {
     position: sticky;
   }
 
+  .md\:left-16 {
+    left: 4rem;
+  }
+
+  .md\:right-16 {
+    right: 4rem;
+  }
+
   .md\:block {
     display: block;
   }
@@ -3210,6 +3266,11 @@ h1, h2, h3, h4, h5, h6 {
   .md\:px-12 {
     padding-left: 3rem;
     padding-right: 3rem;
+  }
+
+  .md\:px-16 {
+    padding-left: 4rem;
+    padding-right: 4rem;
   }
 
   .md\:text-2xl {
