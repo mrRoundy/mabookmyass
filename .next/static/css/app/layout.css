@@ -2600,13 +2600,11 @@ h1, h2, h3, h4, h5, h6 {
     position: relative;
     transform-style: preserve-3d;
     margin: 0 auto 1.5rem;
-    transform: rotateX(40deg); /* Your required transform */
-    border: 3px solid #173F25;
-    border-radius: 6px;
-    background-color: #FDF9F6;
+    transform: rotateX(40deg);
+    /* The border is removed from here to prevent alignment issues */
 }
 
-/* Static left page with a spine line */
+/* Static left page of the book */
 .book::before {
     content: '';
     display: block;
@@ -2615,11 +2613,24 @@ h1, h2, h3, h4, h5, h6 {
     position: absolute;
     top: 0;
     left: 0;
+    background-color: #FDF9F6;
     border-right: 1px solid #e0dccc;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
 }
 
+/* This new pseudo-element creates the green outline BEHIND the book */
 .book::after {
-    display: none;
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    background-color: #173F25;
+    border-radius: 6px;
+    z-index: -1;
+    transform: translateZ(-5px); /* Push it further back */
+    display: block; /* Ensure it's rendered */
 }
 
 .book__page {
@@ -2632,48 +2643,51 @@ h1, h2, h3, h4, h5, h6 {
     background-color: #FDF9F6;
     border-radius: 0 3px 3px 0;
     display: block;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+    border: 1px solid #e0dccc;
 }
 
 .book__page:nth-child(1) {
-    animation: seamless-flip 2.0s linear infinite;
+    animation: seamless-flip 2.0s ease-in-out infinite;
     animation-delay: 0s;
 }
 .book__page:nth-child(2) {
-    animation: seamless-flip 2.0s linear infinite;
-    animation-delay: 0.4s;
+    animation: seamless-flip 2.0s ease-in-out infinite;
+    animation-delay: 0.5s;
 }
 .book__page:nth-child(3) {
-    animation: seamless-flip 2.0s linear infinite;
-    animation-delay: 0.8s;
+    animation: seamless-flip 2.0s ease-in-out infinite;
+    animation-delay: 1.0s;
 }
 .book__page:nth-child(4) {
-    animation: seamless-flip 2.0s linear infinite;
-    animation-delay: 1.2s;
+    animation: seamless-flip 2.0s ease-in-out infinite;
+    animation-delay: 1.5s;
 }
 .book__page:nth-child(5) {
-    animation: seamless-flip 2.0s linear infinite;
-    animation-delay: 1.6s;
+    transform: translateX(2px);
+    z-index: -1;
 }
 
-/* Keyframe for a rapid, continuous right-to-left flip */
+/* Corrected keyframe with fade-in and smooth fade-out */
 @keyframes seamless-flip {
-  /* Start on the right side, visible */
   0% {
+    transform: rotateY(0deg);
+    opacity: 0;
+  }
+  /* Slower fade-in */
+  10% {
     transform: rotateY(0deg);
     opacity: 1;
   }
-  /* Flip to the left side */
-  25% {
+  /* The flip itself */
+  40% {
     transform: rotateY(-180deg);
     opacity: 1;
   }
-  /* Hold on the left side */
-  95% {
+  /* Hold, then start a slower fade-out */
+  70% {
     transform: rotateY(-180deg);
     opacity: 1;
   }
-  /* Fade out right before looping to hide the snap-back */
   100% {
     transform: rotateY(-180deg);
     opacity: 0;
@@ -3208,6 +3222,10 @@ h1, h2, h3, h4, h5, h6 {
 
   .md\:right-16 {
     right: 4rem;
+  }
+
+  .md\:-mr-16 {
+    margin-right: -4rem;
   }
 
   .md\:block {

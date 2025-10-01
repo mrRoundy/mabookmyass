@@ -106,7 +106,7 @@ export default function Navbar({ className }: { className?: string }) {
           </div>
 
           <div className="flex justify-end items-center">
-            <div className="hidden lg:flex items-center space-x-6">
+            <div className="hidden lg:flex items-center space-x-6 md:-mr-16">
                  <Link href="/feedback" className="flex items-center hover:text-gray-300 transition-colors">
                     <span>Feedback</span>
                     <Image src="/image/likeanddislike.png" alt="Feedback Icon" width={56} height={56} className="ml-[-0.5em]" />
