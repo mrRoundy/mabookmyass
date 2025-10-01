@@ -458,9 +458,14 @@ function PromptComponent() {
                 <div className="text-center text-classic-green text-lg my-5">
                     <div className="book-container">
                         <div className="book">
+                            {/* --- MODIFICATION START --- */}
+                            {/* Increased the number of pages to 5 */}
                             <div className="book__page"></div>
                             <div className="book__page"></div>
                             <div className="book__page"></div>
+                            <div className="book__page"></div>
+                            <div className="book__page"></div>
+                            {/* --- MODIFICATION END --- */}
                         </div>
                     </div>
                     <p>AI is analyzing your request and finding the best book recommendations...</p>
