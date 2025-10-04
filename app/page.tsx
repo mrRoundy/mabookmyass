@@ -6,7 +6,7 @@ import Link from 'next/link';
 import BookCarousel from '@/components/BookCarousel';
 import HomePrompt from '@/components/HomePrompt';
 import Bookshelf from '@/components/Bookshelf';
-import TypingAnimationMain from '@/components/TypingAnimationMain';
+import TypingAnimationMain from '@/components/TypingAnimation';
 
 export default function HomePage() {
   return (

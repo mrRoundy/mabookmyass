@@ -3,7 +3,7 @@
 
 import { useState, useEffect, Suspense, FormEvent, ChangeEvent, KeyboardEvent, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
-import TypingAnimationPrompt from '@/components/TypingAnimationPrompt';
+import TypingAnimationPrompt from '@/components/TypingAnimation';
 import RecommendationBook from '@/components/RecommendationBook';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';

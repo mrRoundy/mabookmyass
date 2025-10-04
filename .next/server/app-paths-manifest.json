@@ -1,7 +1,9 @@
 {
   "/book-details/[id]/page": "app/book-details/[id]/page.js",
   "/page": "app/page.js",
-  "/bookshelf/page": "app/bookshelf/page.js",
+  "/privacy/page": "app/privacy/page.js",
   "/prompt/page": "app/prompt/page.js",
-  "/privacy/page": "app/privacy/page.js"
+  "/api/books/search/route": "app/api/books/search/route.js",
+  "/api/analyze/route": "app/api/analyze/route.js",
+  "/bookshelf/page": "app/bookshelf/page.js"
 }

@@ -116,14 +116,26 @@ export default function Navbar({ className }: { className?: string }) {
            
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="lg:hidden text-white z-50 p-2"
+              className="lg:hidden text-white z-50 flex flex-col justify-around w-8 h-8 p-1"
               aria-label="Toggle menu"
             >
-              <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                <path className={`transition-all duration-300 ease-in-out ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`} strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
-                <path className={`absolute transition-all duration-300 ease-in-out ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`} strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              <div
+                className={`bg-white h-0.5 w-full rounded-full transition-all duration-300 ease-in-out ${
+                  isMenuOpen ? 'rotate-45 translate-y-[7px]' : ''
+                }`}
+              ></div>
+              <div
+                className={`bg-white h-0.5 w-full rounded-full transition-all duration-300 ease-in-out ${
+                  isMenuOpen ? 'opacity-0' : 'opacity-100'
+                }`}
+              ></div>
+              <div
+                className={`bg-white h-0.5 w-full rounded-full transition-all duration-300 ease-in-out ${
+                  isMenuOpen ? '-rotate-45 -translate-y-[7px]' : ''
+                }`}
+              ></div>
             </button>
+
           </div>
 
         </div>
@@ -131,7 +143,7 @@ export default function Navbar({ className }: { className?: string }) {
 
       <div className={`fixed inset-0 bg-[#FDF9F6] z-40 flex flex-col text-[#173F25] font-serif lg:hidden
         transition-transform duration-500 ease-in-out transform ${isMenuOpen ? 'translate-y-0' : '-translate-y-full'}`}>
-        <div className="flex-grow w-full max-w-md mx-auto flex flex-col justify-center">
+        <div className="flex-grow w-full max-w-md mx-auto flex flex-col pt-24">
           <Link href="/" onClick={closeMenu} className="mobile-nav-link">Home</Link>
           <Link href="/prompt" onClick={closeMenu} className="mobile-nav-link">MaBook AI</Link>
           <Link href="/bookshelf" onClick={closeMenu} className="mobile-nav-link">Bookshelf</Link>

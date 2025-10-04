@@ -1,4 +1,4 @@
-// components/TypingAnimationPrompt.tsx
+// components/TypingAnimation.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -13,18 +13,23 @@ const quotes = [
   "“The Best Stories Don't Just Entertain, They Build a Better you.”"
 ];
 
-export default function TypingAnimationPrompt() {
+interface TypingAnimationProps {
+    className?: string; // Allow parent to pass in custom classes
+}
+
+export default function TypingAnimation({ className }: TypingAnimationProps) {
     const [currentQuote, setCurrentQuote] = useState('');
 
-    // This effect runs once when the component loads
     useEffect(() => {
-        // Select a random quote from the array
         const randomIndex = Math.floor(Math.random() * quotes.length);
         setCurrentQuote(quotes[randomIndex]);
-    }, []); // The empty array ensures this runs only once on mount
+    }, []);
 
+    // Use a default class string and append any passed-in classes
+    const defaultClasses = "font-sans text-[20px] md:text-[22px] leading-relaxed mb-4 flex items-center justify-center text-center";
+    
     return (
-        <div className="font-sans text-[20px] md:text-[22px] leading-relaxed mb-4 min-h-[80px] md:min-h-[60px] flex items-center justify-center text-center md:whitespace-nowrap">
+        <div className={`${defaultClasses} ${className || ''}`}>
             {currentQuote && (
                 <TypeAnimation
                     cursor={false}
