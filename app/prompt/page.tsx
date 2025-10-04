@@ -80,47 +80,43 @@ const generateAIPrompt = (taskType: string, userPrompt?: string | null, availabl
 - Each string must be the exact "Name" of a recommended genre from the provided list.`,
             content: `User query: "${userPrompt}"\n\nSelected genres:`
         },
+        // --- MODIFICATION START ---
         highlightRanking: {
             role: "You are an expert content analyst specializing in matching book insights to user queries with surgical precision. You are fluent in both English and Indonesian.",
             context: `You have ${totalCount} individual book highlights. Your task is to find the most relevant highlights that directly answer or address the user's specific query, which may be in English or Indonesian.`,
-            task: `Select the TOP 5 most relevant highlights that best answer the user's query. The user's query can be in English or Indonesian.`,
+            task: `Rank ALL of the provided highlights based on how relevant they are to the user's query.`,
             process: `
-1. Analyze the user's query, whether it is in English or Indonesian, to identify their specific need, problem, or area of interest.
-2. Evaluate each highlight for direct relevance to the query's meaning. How well does it answer or address what the user is asking?
-3. Score each highlight: HIGH (directly answers query), MEDIUM (related/helpful), LOW (tangentially related).
-4. Select only HIGH and strong MEDIUM scoring highlights.
-5. Rank the selected highlights by relevance score (best matches first).
-6. It's acceptable to select multiple highlights from the same book if they're all highly relevant.
-7. Never select duplicate/identical highlights.
-8. A maximum of 5 highlights is allowed, but fewer is acceptable if only a few are truly relevant.`,
+1. Analyze the user's query (in English or Indonesian) to understand their specific need.
+2. Evaluate every single highlight provided for its relevance to the query.
+3. Rank all highlights from most relevant to least relevant. Even highlights with low relevance must be included at the end of the list.
+4. Do not filter or exclude any highlights. The final list must contain all original highlights, just in a new order.`,
             outputFormat: `
 - Your response MUST be a valid JSON object.
 - The JSON object must have a single key: "recommendations".
 - The value must be an array of objects, each with an "id" field.
-- Each "id" must match exactly one of the highlight IDs provided.
-- Order by relevance (best match first).`,
-            content: `Available highlights:\n${data}\n\nUser query: "${userPrompt}"\n\nBest matching highlights (ranked by relevance):`
+- The array must contain an object for EVERY highlight ID provided in the input.
+- Order the array by relevance (most relevant first, least relevant last).`,
+            content: `Available highlights:\n${data}\n\nUser query: "${userPrompt}"\n\nRanked matching highlights:`
         },
         synopsisRanking: {
             role: "You are an expert content analyst specializing in matching book synopses to user queries with surgical precision. You are fluent in both English and Indonesian.",
             context: `You have ${totalCount} individual book synopses. Your task is to find the most relevant synopses that directly address the user's specific query, which may be in.`,
-            task: `Select the TOP 5 most relevant synopses that best answer the user's query. The user's query can be in English or Indonesian.`,
+            task: `Rank ALL of the provided synopses based on how relevant they are to the user's query.`,
             process: `
-1. Analyze the user's query to identify their specific need, problem, or area of interest.
-2. Evaluate each synopsis for direct relevance to the query's meaning.
-3. Score each synopsis: HIGH (directly answers query), MEDIUM (related/helpful), LOW (tangentially related).
-4. Select only HIGH and strong MEDIUM scoring synopses.
-5. **CRITICAL RULE: Strongly prefer selecting synopses from different books. The final list should be as diverse as possible.**
-6. Rank the selected synopses by relevance score (best matches first).
-7. A maximum of 5 synopses is allowed, but fewer is acceptable if only a few are truly relevant.`,
+1. Analyze the user's query to understand their specific need.
+2. Evaluate every single synopsis for its relevance to the query.
+3. Rank all synopses from most relevant to least relevant. Even synopses with low relevance must be included at the end of the list.
+4. Do not filter or exclude any synopses. The final list must contain all original synopses, just in a new order.
+5. **CRITICAL RULE: While ranking, strongly prefer diversity. Try not to rank multiple synopses from the same book highly if possible.**`,
             outputFormat: `
 - Your response MUST be a valid JSON object.
 - The JSON object must have a single key: "recommendations".
-- The value must be an array of objects, once with an "id" field.
-- Each "id" must match exactly one of the synopsis IDs provided.
-- Order by relevance (best match first).`,
-            content: `Available synopses:\n${data}\n\nUser query: "${userPrompt}"\n\nBest matching synopses (ranked by relevance):`
+- The value must be an array of objects, each with an "id" field.
+- The array must contain an object for EVERY synopsis ID provided in the input.
+- Order the array by relevance (most relevant first, least relevant last).`,
+            content: `Available synopses:\n${data}\n\nUser query: "${userPrompt}"\n\nRanked matching synopses:`
         }
+        // --- MODIFICATION END ---
     };
     const selectedPrompt = prompts[taskType];
     if (!selectedPrompt) throw new Error(`Unknown task type: ${taskType}`);

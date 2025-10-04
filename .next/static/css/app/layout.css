@@ -1196,6 +1196,9 @@ video {
 .max-w-\[640px\] {
   max-width: 640px;
 }
+.max-w-\[960px\] {
+  max-width: 960px;
+}
 .max-w-md {
   max-width: 28rem;
 }
@@ -1302,6 +1305,9 @@ video {
 .gap-16 {
   gap: 4rem;
 }
+.gap-8 {
+  gap: 2rem;
+}
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
   margin-right: calc(0.5rem * var(--tw-space-x-reverse));
@@ -1326,6 +1332,11 @@ video {
   --tw-space-y-reverse: 0;
   margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(1rem * var(--tw-space-y-reverse));
+}
+.space-y-8 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(2rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(2rem * var(--tw-space-y-reverse));
 }
 .self-start {
   align-self: flex-start;
@@ -1418,12 +1429,13 @@ video {
   --tw-border-opacity: 1;
   border-color: rgb(253 224 71 / var(--tw-border-opacity, 1));
 }
-.border-yellow-700\/50 {
-  border-color: rgb(161 98 7 / 0.5);
-}
 .bg-\[\#173F25\] {
   --tw-bg-opacity: 1;
   background-color: rgb(23 63 37 / var(--tw-bg-opacity, 1));
+}
+.bg-\[\#FCF9F6\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(252 249 246 / var(--tw-bg-opacity, 1));
 }
 .bg-\[\#FDF9F6\] {
   --tw-bg-opacity: 1;
@@ -1565,9 +1577,6 @@ video {
 .pb-8 {
   padding-bottom: 2rem;
 }
-.pl-4 {
-  padding-left: 1rem;
-}
 .text-left {
   text-align: left;
 }
@@ -1638,9 +1647,6 @@ video {
 }
 .font-light {
   font-weight: 300;
-}
-.font-normal {
-  font-weight: 400;
 }
 .font-semibold {
   font-weight: 600;
@@ -3190,9 +3196,6 @@ h1, h2, h3, h4, h5, h6 {
   80% { transform: translate(3px, 3px); }
   100% { transform: translate(0); }
 }
-
-/* --- REPLACE the old .team-display-... rules with this block --- */
-
 .mfo-secondary-view {
   position: fixed;
   inset: 0;
@@ -3234,6 +3237,168 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 0.8rem;
   color: #555;
   margin-top: 0.25rem;
+}
+.content-section-title {
+    font-size: 1.875rem; /* text-3xl */
+    font-family: var(--font-playfair-display), serif;
+    color: #173F25;
+    margin-bottom: 1.5rem;
+}
+
+.highlight-card {
+    position: relative;
+    background-color: #FFFDFA; /* A slightly warmer, paper-like white */
+    border-radius: 4px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.highlight-card:hover {
+    transform: rotate(-1.5deg) scale(1.03);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.highlight-quote-icon {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    font-size: 3.5rem;
+    color: #173F25; 
+    font-family: var(--font-playfair-display), serif;
+    line-height: 1;
+    z-index: 0;
+}
+.highlight-card::after {
+    content: '”';
+    position: absolute;
+    bottom: -0.5rem;
+    right: 0.75rem;
+    font-size: 3.5rem;
+    color: #173F25;
+    font-family: var(--font-playfair-display), serif;
+    line-height: 1;
+    z-index: 0;
+}
+
+.highlight-text {
+    position: relative; /* Ensures text stays on top of the icon */
+    z-index: 1;
+    font-style: italic;
+    color: #374151; /* gray-700 */
+    font-size: 1.125rem; /* text-lg */
+    /* UPDATED: Added right padding to match the left */
+    padding-left: 2.5rem; 
+    padding-right: 2.5rem;
+}
+/* --- Book Details Page Container (The Box) --- */
+.book-details-container {
+    background-color: #FFFFFF;
+    border-radius: 0.75rem; /* 12px */
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+@media (min-width: 768px) {
+    .book-details-container {
+        padding: 3rem;
+    }
+}
+
+/* --- Book Details Page (Final Styles) --- */
+
+/* The wrapper holds the shadow and overall shape */
+.book-details-wrapper {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border-radius: 0.75rem; /* 12px */
+}
+
+/* The top box for the cover and title */
+.book-hero-section {
+    background-color: #FFFFFF;
+    padding: 2.5rem;
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
+}
+
+/* The bottom box for the content */
+.book-content-box {
+    background-color: #FFFFFF;
+    padding: 2.5rem;
+    box-shadow: none; /* Shadow is now on the wrapper */
+    border-radius: 0; /* Remove old radius */
+    border-bottom-left-radius: 0.75rem;
+    border-bottom-right-radius: 0.75rem;
+}
+
+@media (min-width: 768px) {
+    .book-hero-section,
+    .book-content-box {
+        padding: 3.5rem;
+    }
+}
+
+/* --- Final Genre Display Style --- */
+.genre-display-text {
+    border-left: 3px solid #d4c0a1; /* The vertical line */
+    padding-left: 1rem;
+    font-size: 1.2rem;
+    color: #504646;
+}
+
+/* --- Highlight Card Styles --- */
+.content-section-title {
+    font-size: 1.875rem; /* text-3xl */
+    font-family: var(--font-playfair-display), serif;
+    color: #173F25;
+    margin-bottom: 1.5rem;
+}
+
+.highlight-card {
+    position: relative;
+    background-color: #FFFDFA;
+    border-radius: 4px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.highlight-card:hover {
+    transform: rotate(-1.5deg) scale(1.03);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.highlight-quote-icon {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    font-size: 3.5rem;
+    color: #173F25; 
+    font-family: var(--font-playfair-display), serif;
+    line-height: 1;
+    z-index: 0;
+}
+
+.highlight-card::after {
+    content: '”';
+    position: absolute;
+    bottom: -0.5rem;
+    right: 0.75rem;
+    font-size: 3.5rem;
+    color: #173F25;
+    font-family: var(--font-playfair-display), serif;
+    line-height: 1;
+    z-index: 0;
+}
+
+.highlight-text {
+    position: relative;
+    z-index: 1;
+    font-style: italic;
+    color: #374151;
+    font-size: 1.125rem;
+    padding-left: 2.5rem; 
+    padding-right: 2.5rem;
 }
 
 .hover\:scale-105:hover {
@@ -3349,6 +3514,11 @@ h1, h2, h3, h4, h5, h6 {
     right: 4rem;
   }
 
+  .md\:mx-0 {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
   .md\:-mr-16 {
     margin-right: -4rem;
   }
@@ -3385,6 +3555,10 @@ h1, h2, h3, h4, h5, h6 {
     grid-template-columns: 220px 1fr;
   }
 
+  .md\:grid-cols-\[272px_1fr\] {
+    grid-template-columns: 272px 1fr;
+  }
+
   .md\:whitespace-nowrap {
     white-space: nowrap;
   }
@@ -3414,6 +3588,10 @@ h1, h2, h3, h4, h5, h6 {
   .md\:px-16 {
     padding-left: 4rem;
     padding-right: 4rem;
+  }
+
+  .md\:text-left {
+    text-align: left;
   }
 
   .md\:text-2xl {
