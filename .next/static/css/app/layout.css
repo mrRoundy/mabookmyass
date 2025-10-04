@@ -2258,7 +2258,7 @@ h1, h2, h3, h4, h5, h6 {
     transition: all 0.2s ease-in-out;
 }
 
-/* --- Bookshelf Component Styles --- */
+/* --- Final Embla Bookshelf Styles (Supports Buttons & Swipe) --- */
 .bookshelf-section {
     padding-top: 2rem;
     padding-bottom: 2rem;
@@ -2282,7 +2282,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s, opacity 0.2s ease-in-out;
+    transition: background-color 0.2s;
     box-shadow: 0 1px 3px rgba(31,41,55,0.2);
     z-index: 10;
     flex-shrink: 0;
@@ -2290,17 +2290,23 @@ h1, h2, h3, h4, h5, h6 {
 .scroll-btn:hover {
     background-color: #1f2937;
 }
-.bookshelf-container {
+
+/* Embla Carousel Styles */
+.embla {
     overflow: hidden;
+    perspective: 1500px; 
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent); 
+            mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
 }
-.bookshelf {
+.embla__container {
     display: flex;
-    width: -moz-max-content;
-    width: max-content;
-    gap: 2rem;
+    padding: 1rem 0; 
 }
-.bookshelf-container::-webkit-scrollbar {
-    display: none; /* For Chrome, Safari, and Opera */
+.embla__slide {
+    flex: 0 0 12rem; /* Each slide takes up 12rem of width */
+    min-width: 0;
+    padding: 0 1rem; /* Space between books */
+    position: relative;
 }
 
 /* --- Book Item and Info Styles --- */
@@ -3400,94 +3406,107 @@ h1, h2, h3, h4, h5, h6 {
     padding-left: 2.5rem; 
     padding-right: 2.5rem;
 }
+/* --- Bookshelf Fade Effect --- */
 
+/* This makes the wrapper a positioning context for the gradients */
+.bookshelf-controls-wrapper {
+    position: relative;
+}
+
+/* This creates the fade on the left side */
+.bookshelf-controls-wrapper::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5rem; /* 80px */
+    background: linear-gradient(to right, #FCF9F6, transparent);
+    pointer-events: none; /* Allows clicking through the gradient */
+    z-index: 5; /* Sits on top of books but below buttons */
+}
+
+/* This creates the fade on the right side */
+.bookshelf-controls-wrapper::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 5rem; /* 80px */
+    background: linear-gradient(to left, #FCF9F6, transparent);
+    pointer-events: none;
+    z-index: 5;
+}
 .hover\:scale-105:hover {
   --tw-scale-x: 1.05;
   --tw-scale-y: 1.05;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
-
 .hover\:bg-\[\#FDF9F6\]:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(253 249 246 / var(--tw-bg-opacity, 1));
 }
-
 .hover\:bg-gray-100:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
 }
-
 .hover\:bg-white\/10:hover {
   background-color: rgb(255 255 255 / 0.1);
 }
-
 .hover\:text-gray-300:hover {
   --tw-text-opacity: 1;
   color: rgb(209 213 219 / var(--tw-text-opacity, 1));
 }
-
 .hover\:text-white:hover {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
-
 .hover\:text-yellow-900:hover {
   --tw-text-opacity: 1;
   color: rgb(113 63 18 / var(--tw-text-opacity, 1));
 }
-
 .hover\:underline:hover {
   text-decoration-line: underline;
 }
-
 .hover\:opacity-90:hover {
   opacity: 0.9;
 }
-
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
-
 .enabled\:bg-classic-green:enabled {
   --tw-bg-opacity: 1;
   background-color: rgb(23 63 37 / var(--tw-bg-opacity, 1));
 }
-
 .enabled\:text-white:enabled {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
-
 .disabled\:cursor-not-allowed:disabled {
   cursor: not-allowed;
 }
-
 .disabled\:bg-gray-400:disabled {
   --tw-bg-opacity: 1;
   background-color: rgb(156 163 175 / var(--tw-bg-opacity, 1));
 }
-
 .disabled\:bg-neutral-100:disabled {
   --tw-bg-opacity: 1;
   background-color: rgb(245 245 245 / var(--tw-bg-opacity, 1));
 }
-
 .disabled\:text-gray-400:disabled {
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity, 1));
 }
-
 .disabled\:text-neutral-400:disabled {
   --tw-text-opacity: 1;
   color: rgb(163 163 163 / var(--tw-text-opacity, 1));
 }
-
 .disabled\:text-yellow-500:disabled {
   --tw-text-opacity: 1;
   color: rgb(234 179 8 / var(--tw-text-opacity, 1));
 }
-
 @media (min-width: 640px) {
 
   .sm\:inline {
@@ -3499,7 +3518,6 @@ h1, h2, h3, h4, h5, h6 {
     padding-right: 1.5rem;
   }
 }
-
 @media (min-width: 768px) {
 
   .md\:sticky {
@@ -3631,7 +3649,6 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.75rem;
   }
 }
-
 @media (min-width: 1024px) {
 
   .lg\:flex {
